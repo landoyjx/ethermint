@@ -11,7 +11,7 @@ services:
     command: /bin/bash -c 'cd /home/testnet/node1 && ../../emintd start --home emintd --log_level info'
     networks:
       localnet:
-        ipv4_address: 192.168.10.2
+        ipv4_address: 192.168.20.2
 
   node2:
     container_name: node2
@@ -23,7 +23,7 @@ services:
     command: /bin/bash -c 'cd /home/testnet/node2 && ../../emintd start --home emintd --log_level info'
     networks:
       localnet:
-        ipv4_address: 192.168.10.3
+        ipv4_address: 192.168.20.3
 
   node3:
     container_name: node3
@@ -35,7 +35,7 @@ services:
     command: /bin/bash -c 'cd /home/testnet/node3 && ../../emintd start --home emintd --log_level info'
     networks:
       localnet:
-        ipv4_address: 192.168.10.4
+        ipv4_address: 192.168.20.4
 
 networks:
   localnet:
@@ -44,4 +44,4 @@ networks:
       driver: default
       config:
       -
-        subnet: 192.168.10.0/16
+        subnet: 192.168.20.0/16
