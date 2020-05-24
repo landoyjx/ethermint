@@ -1,38 +1,38 @@
 version: '3'
 
 services:
-  node1:
-    container_name: node1
+  node0:
+    container_name: node0
     image: ubuntu:16.04
     ports:
     - "26656-26657:26656-26657"
     volumes:
     - ./build:/home
-    command: /bin/bash -c 'cd /home/testnet/node1 && ../../emintd start --home emintd --log_level info'
+    command: /bin/bash -c 'cd /home/ && ./emintd start --home node0 --log_level info --rpc.unsafe'
     networks:
       localnet:
         ipv4_address: 192.168.20.2
 
-  node2:
-    container_name: node2
+  node1:
+    container_name: node1
     image: ubuntu:16.04
     ports:
     - "26659-26660:26656-26657"
     volumes:
     - ./build:/home
-    command: /bin/bash -c 'cd /home/testnet/node2 && ../../emintd start --home emintd --log_level info'
+    command: /bin/bash -c 'cd /home/ && ./emintd start --home node1 --log_level info --rpc.unsafe'
     networks:
       localnet:
         ipv4_address: 192.168.20.3
 
-  node3:
-    container_name: node3
+  node2:
+    container_name: node2
     image: ubuntu:16.04
     ports:
     - "26661-26662:26656-26657"
     volumes:
     - ./build:/home
-    command: /bin/bash -c 'cd /home/testnet/node3 && ../../emintd start --home emintd --log_level info'
+    command: /bin/bash -c 'cd /home/ && ./emintd start --home node2 --log_level info --rpc.unsafe'
     networks:
       localnet:
         ipv4_address: 192.168.20.4

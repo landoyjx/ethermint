@@ -187,9 +187,7 @@ test-cli test-race test-unit test test-import
 ### Testnet. ###
 #######################
 testnet_init:
-	@cp -R testnet/node1 build/
-	@cp -R testnet/node2 build/
-	@cp -R testnet/node3 build/
+	@cp -R testnet/ build/
 
 testnet_start:
 	docker-compose up -d

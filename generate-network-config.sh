@@ -33,7 +33,7 @@ emintd collect-gentxs --home testnet/node0
 emintd collect-gentxs --home testnet/node1
 emintd collect-gentxs --home testnet/node2
 
-# 7. collect node1 and node2 genesis.json gentxs and copy to node0 genesis.json gentxs
+# 7. collect node1 and node2 genesis.json gentxs, copy to node0 genesis.json gentxs, copy node0 genesis.json to replace others
 
 # 8. config each node's config.toml persistent_peers to the other two node's node-id@node-ip:26656
 
