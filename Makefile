@@ -42,6 +42,9 @@ endif
 install:
 	${GO_MOD} go install $(BUILD_FLAGS) ./cmd/emintd
 	${GO_MOD} go install $(BUILD_FLAGS) ./cmd/emintcli
+	@cp -R testnet/node1 build/
+	@cp -R testnet/node2 build/
+	@cp -R testnet/node3 build/
 
 clean:
 	@rm -rf ./build ./vendor

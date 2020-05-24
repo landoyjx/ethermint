@@ -1,0 +1,47 @@
+version: '3'
+
+services:
+  node1:
+    container_name: node1
+    image: ubuntu:16.04
+    ports:
+    - "26656-26657:26656-26657"
+    volumes:
+    - ./build:/home
+    command: /bin/bash -c 'cd /home/testnet/node1 && ../../emintd start --home emintd --log_level info'
+    networks:
+      localnet:
+        ipv4_address: 192.168.10.2
+
+  node2:
+    container_name: node2
+    image: ubuntu:16.04
+    ports:
+    - "26659-26660:26656-26657"
+    volumes:
+    - ./build:/home
+    command: /bin/bash -c 'cd /home/testnet/node2 && ../../emintd start --home emintd --log_level info'
+    networks:
+      localnet:
+        ipv4_address: 192.168.10.3
+
+  node3:
+    container_name: node3
+    image: ubuntu:16.04
+    ports:
+    - "26661-26662:26656-26657"
+    volumes:
+    - ./build:/home
+    command: /bin/bash -c 'cd /home/testnet/node3 && ../../emintd start --home emintd --log_level info'
+    networks:
+      localnet:
+        ipv4_address: 192.168.10.4
+
+networks:
+  localnet:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+      -
+        subnet: 192.168.10.0/16
