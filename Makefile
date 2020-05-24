@@ -42,9 +42,6 @@ endif
 install:
 	${GO_MOD} go install $(BUILD_FLAGS) ./cmd/emintd
 	${GO_MOD} go install $(BUILD_FLAGS) ./cmd/emintcli
-	@cp -R testnet/node1 build/
-	@cp -R testnet/node2 build/
-	@cp -R testnet/node3 build/
 
 clean:
 	@rm -rf ./build ./vendor
@@ -185,6 +182,25 @@ format:
 
 .PHONY: build install update-tools tools godocs clean format lint \
 test-cli test-race test-unit test test-import
+
+#######################
+### Testnet. ###
+#######################
+testnet_init:
+	@cp -R testnet/node1 build/
+	@cp -R testnet/node2 build/
+	@cp -R testnet/node3 build/
+
+testnet_start:
+	docker-compose up -d
+
+testnet_stop:
+	docker-compose down
+
+testnet_clean:
+	docker-compose down
+	rm -rf build/node*
+
 
 ###############################################################################
 ###                                Protobuf                                 ###
