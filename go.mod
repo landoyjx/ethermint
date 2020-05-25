@@ -36,5 +36,5 @@ require (
 )
 
 replace (
-	github.com/cosmos/cosmos-sdk => github.com/landoyjx/cosmos-sdk v0.37.12-halle
+	github.com/cosmos/cosmos-sdk => github.com/landoyjx/cosmos-sdk v0.34.4-1
 )
