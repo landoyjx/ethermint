@@ -45,7 +45,7 @@ cp testnet/node0/config/genesis.json testnet/node2/config/
 # 8. config each node's config.toml persistent_peers to the other two node's node-id@node-ip:26656
 os=`uname -a`
 mac='Darwin'
-peers=`emintd tendermint show-node-id --home testnet/node0`@192.168.20.2,`emintd tendermint show-node-id --home testnet/node1`@192.168.20.3,`emintd tendermint show-node-id --home testnet/node2`@192.168.20.4
+peers=`emintd tendermint show-node-id --home testnet/node0`@192.168.20.2:26656,`emintd tendermint show-node-id --home testnet/node1`@192.168.20.3:26656,`emintd tendermint show-node-id --home testnet/node2`@192.168.20.4:26656
 if [[ $os =~ $mac ]];then
     gsed -i '175,175d' testnet/node0/config/config.toml
     gsed -i "174a persistent_peers = \"$peers\"" testnet/node0/config/config.toml
