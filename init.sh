@@ -24,7 +24,7 @@ emintcli config indent true
 emintcli config trust-node true
 
 # Allocate genesis accounts (cosmos formatted addresses)
-emintd add-genesis-account $(emintcli keys show $KEY -a) 1000000000000000000stake
+emintd add-genesis-account $(emintcli keys show $KEY -a) 1000000000000000000hale
 
 # Sign genesis transaction
 emintd gentx --name $KEY --keyring-backend test

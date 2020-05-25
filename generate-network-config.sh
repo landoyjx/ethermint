@@ -17,11 +17,11 @@ emintcli keys add mykey1
 emintcli keys add mykey2
 
 # 4. add genesis accounts to genesis.json
-emintd add-genesis-account $(emintcli keys show mykey0 -a) 1000000000000000000stake --home testnet/node0
-emintd add-genesis-account $(emintcli keys show mykey1 -a) 1000000000000000000stake --home testnet/node0
-emintd add-genesis-account $(emintcli keys show mykey2 -a) 1000000000000000000stake --home testnet/node0
-emintd add-genesis-account $(emintcli keys show mykey1 -a) 1000000000000000000stake --home testnet/node1
-emintd add-genesis-account $(emintcli keys show mykey2 -a) 1000000000000000000stake --home testnet/node2
+emintd add-genesis-account $(emintcli keys show mykey0 -a) 1000000000000000000hale --home testnet/node0
+emintd add-genesis-account $(emintcli keys show mykey1 -a) 1000000000000000000hale --home testnet/node0
+emintd add-genesis-account $(emintcli keys show mykey2 -a) 1000000000000000000hale --home testnet/node0
+emintd add-genesis-account $(emintcli keys show mykey1 -a) 1000000000000000000hale --home testnet/node1
+emintd add-genesis-account $(emintcli keys show mykey2 -a) 1000000000000000000hale --home testnet/node2
 
 # 5. create gentxs
 emintd gentx --name mykey0 --home testnet/node0 --ip 192.168.20.2 --node-id $(emintd tendermint show-node-id --home testnet/node0) --keyring-backend test
