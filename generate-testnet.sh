@@ -43,9 +43,14 @@ cp testnet/node0/config/genesis.json testnet/node1/config/
 cp testnet/node0/config/genesis.json testnet/node2/config/
 
 # 8. config each node's config.toml persistent_peers to the other two node's node-id@node-ip:26656
+os=`uname -a`
+mac='Darwin'
+if [[ $os =~ $mac ]];then
+    alias sed=gsed
+fi
 peers=`emintd tendermint show-node-id --home testnet/node0`@192.168.20.2,`emintd tendermint show-node-id --home testnet/node1`@192.168.20.3,`emintd tendermint show-node-id --home testnet/node2`@192.168.20.4
-gsed -i '175,175d' testnet/node0/config/config.toml
-gsed -i "174a persistent_peers = \"$peers\"" testnet/node0/config/config.toml
+sed -i '175,175d' testnet/node0/config/config.toml
+sed -i "174a persistent_peers = \"$peers\"" testnet/node0/config/config.toml
 
 # 9. start each node, emintd start --home node* --rpc.unsafe --log_level "main:info,state:info,mempool:info"
 echo -e "\n------Enjoy it!------"
