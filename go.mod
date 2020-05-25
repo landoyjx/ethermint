@@ -34,3 +34,7 @@ require (
 	golang.org/x/crypto v0.0.0-20200311171314-f7b00557c8c4
 	gopkg.in/yaml.v2 v2.2.8
 )
+
+replace (
+	github.com/cosmos/cosmos-sdk => github.com/okex/cosmos-sdk v0.37.12-halle
+)
