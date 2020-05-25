@@ -20,5 +20,6 @@ build/
 start.sh
 
 bin/
-testnet/node*
+testnet/*/*
+testnet/*/*/*
 
