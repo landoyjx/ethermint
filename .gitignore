@@ -20,6 +20,4 @@ build/
 start.sh
 
 bin/
-testnet/*/*
-testnet/*/*/*
 
