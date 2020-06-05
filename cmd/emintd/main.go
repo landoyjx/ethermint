@@ -94,8 +94,12 @@ func main() {
 }
 
 func newApp(logger log.Logger, db dbm.DB, traceStore io.Writer) abci.Application {
-	return app.NewEthermintApp(logger, db, traceStore, true, 0,
-		baseapp.SetPruning(store.NewPruningOptionsFromString(viper.GetString("pruning"))))
+	return app.NewEthermintApp(
+		logger, db, traceStore, true, 0,
+		baseapp.SetPruning(store.NewPruningOptionsFromString(viper.GetString("pruning"))),
+		baseapp.SetMinGasPrices(viper.GetString(server.FlagMinGasPrices)),
+		baseapp.SetHaltHeight(uint64(viper.GetInt(server.FlagHaltHeight))),
+	)
 }
 
 func exportAppStateAndTMValidators(
