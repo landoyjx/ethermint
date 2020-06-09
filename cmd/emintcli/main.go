@@ -40,7 +40,6 @@ func main() {
 
 	tmamino.RegisterKeyType(emintcrypto.PubKeySecp256k1{}, emintcrypto.PubKeyAminoName)
 	tmamino.RegisterKeyType(emintcrypto.PrivKeySecp256k1{}, emintcrypto.PrivKeyAminoName)
-
 	keyring.CryptoCdc = cdc
 	clientkeys.KeysCdc = cdc
 

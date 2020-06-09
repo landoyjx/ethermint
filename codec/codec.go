@@ -1,6 +1,8 @@
 package codec
 
 import (
+	"fmt"
+
 	"github.com/cosmos/cosmos-sdk/codec"
 	codecstd "github.com/cosmos/cosmos-sdk/codec/std"
 	"github.com/cosmos/cosmos-sdk/crypto/keyring"
@@ -33,6 +35,8 @@ func NewAppCodec(amino *codec.Codec) *Codec {
 // the Marshaler interface, it is treated as a Proto-defined message and
 // serialized that way. Otherwise, it falls back on the internal Amino codec.
 func (c *Codec) MarshalAccount(accI authexported.Account) ([]byte, error) {
+
+	fmt.Printf("(c *Codec) MarshalAccount-----------------------------------------------\n")
 	acc := &Account{}
 	if err := acc.SetAccount(accI); err != nil {
 		return nil, err

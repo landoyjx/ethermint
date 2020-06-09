@@ -305,6 +305,8 @@ func NewEthermintApp(
 		}
 	}
 
+	cdc.PrintTypes(os.Stdout)
+
 	return app
 }
 
