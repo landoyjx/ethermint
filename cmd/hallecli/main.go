@@ -52,7 +52,7 @@ func main() {
 	config.Seal()
 
 	rootCmd := &cobra.Command{
-		Use:   "emintcli",
+		Use:   "hallecli",
 		Short: "Command line interface for interacting with emintd",
 	}
 

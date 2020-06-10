@@ -36,14 +36,14 @@ import (
 	dbm "github.com/tendermint/tm-db"
 )
 
-const appName = "Ethermint"
+const appName = "halle"
 
 var (
 	// DefaultCLIHome sets the default home directories for the application CLI
-	DefaultCLIHome = os.ExpandEnv("$HOME/.emintcli")
+	DefaultCLIHome = os.ExpandEnv("$HOME/.hallecli")
 
 	// DefaultNodeHome sets the folder where the applcation data and configuration will be stored
-	DefaultNodeHome = os.ExpandEnv("$HOME/.emintd")
+	DefaultNodeHome = os.ExpandEnv("$HOME/.halled")
 
 	// ModuleBasics defines the module BasicManager is in charge of setting up basic,
 	// non-dependant module elements, such as codec registration
