@@ -17,8 +17,8 @@ COMMIT_HASH := $(shell git rev-parse --short HEAD)
 BUILD_FLAGS = -tags netgo -ldflags "-X github.com/cosmos/ethermint/version.GitCommit=${COMMIT_HASH}"
 DOCKER_TAG = unstable
 DOCKER_IMAGE = cosmos/ethermint
-ETHERMINT_DAEMON_BINARY = emintd
-ETHERMINT_CLI_BINARY = emintcli
+ETHERMINT_DAEMON_BINARY = halled
+ETHERMINT_CLI_BINARY = hallecli
 GO_MOD=GO111MODULE=on
 BINDIR ?= $(GOPATH)/bin
 SIMAPP = github.com/cosmos/ethermint/app
@@ -32,16 +32,16 @@ all: tools verify install
 
 build:
 ifeq ($(OS),Windows_NT)
-	${GO_MOD} go build $(BUILD_FLAGS) -o build/$(ETHERMINT_DAEMON_BINARY).exe ./cmd/emintd
-	${GO_MOD} go build $(BUILD_FLAGS) -o build/$(ETHERMINT_CLI_BINARY).exe ./cmd/emintcli
+	${GO_MOD} go build $(BUILD_FLAGS) -o build/$(ETHERMINT_DAEMON_BINARY).exe ./cmd/halled
+	${GO_MOD} go build $(BUILD_FLAGS) -o build/$(ETHERMINT_CLI_BINARY).exe ./cmd/hallecli
 else
-	${GO_MOD} go build $(BUILD_FLAGS) -o build/$(ETHERMINT_DAEMON_BINARY) ./cmd/emintd/
-	${GO_MOD} go build $(BUILD_FLAGS) -o build/$(ETHERMINT_CLI_BINARY) ./cmd/emintcli/
+	${GO_MOD} go build $(BUILD_FLAGS) -o build/$(ETHERMINT_DAEMON_BINARY) ./cmd/halled/
+	${GO_MOD} go build $(BUILD_FLAGS) -o build/$(ETHERMINT_CLI_BINARY) ./cmd/hallecli/
 endif
 
 install:
-	${GO_MOD} go install $(BUILD_FLAGS) ./cmd/emintd
-	${GO_MOD} go install $(BUILD_FLAGS) ./cmd/emintcli
+	${GO_MOD} go install $(BUILD_FLAGS) ./cmd/halled
+	${GO_MOD} go install $(BUILD_FLAGS) ./cmd/hallecli
 
 clean:
 	@rm -rf ./build ./vendor
@@ -212,7 +212,7 @@ proto-gen:
 proto-lint:
 	@buf check lint --error-format=json
 
-# NOTE: should match the default repo branch 
+# NOTE: should match the default repo branch
 proto-check-breaking:
 	@buf check breaking --against-input '.git#branch=development'
 
@@ -281,8 +281,8 @@ test-sim-nondeterminism:
 
 test-sim-custom-genesis-fast:
 	@echo "Running custom genesis simulation..."
-	@echo "By default, ${HOME}/.emintd/config/genesis.json will be used."
-	@go test -mod=readonly $(SIMAPP) -run TestFullAppSimulation -Genesis=${HOME}/.emintd/config/genesis.json \
+	@echo "By default, ${HOME}/.halled/config/genesis.json will be used."
+	@go test -mod=readonly $(SIMAPP) -run TestFullAppSimulation -Genesis=${HOME}/.halled/config/genesis.json \
 		-Enabled=true -NumBlocks=100 -BlockSize=200 -Commit=true -Seed=99 -Period=5 -v -timeout 24h
 
 test-sim-import-export: runsim
@@ -295,8 +295,8 @@ test-sim-after-import: runsim
 
 test-sim-custom-genesis-multi-seed: runsim
 	@echo "Running multi-seed custom genesis simulation..."
-	@echo "By default, ${HOME}/.emintd/config/genesis.json will be used."
-	@$(BINDIR)/runsim -Jobs=4 -Genesis=${HOME}/.emintd/config/genesis.json 400 5 TestFullAppSimulation
+	@echo "By default, ${HOME}/.halled/config/genesis.json will be used."
+	@$(BINDIR)/runsim -Jobs=4 -Genesis=${HOME}/.halled/config/genesis.json 400 5 TestFullAppSimulation
 
 test-sim-multi-seed-long: runsim
 	@echo "Running multi-seed application simulation. This may take awhile!"
