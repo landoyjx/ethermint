@@ -65,6 +65,7 @@ func (st StateTransition) newEVM(ctx sdk.Context, csdb *CommitStateDB, gasLimit 
 	return vm.NewEVM(context, csdb, GenerateChainConfig(st.ChainID), vm.Config{})
 }
 
+
 // TransitionDb will transition the state by applying the current transaction and
 // returning the evm execution result.
 // NOTE: State transition checks are run during AnteHandler execution.
@@ -114,6 +115,7 @@ func (st StateTransition) TransitionDb(ctx sdk.Context) (*ExecutionResult, error
 	}
 
 	evm := st.newEVM(ctx, csdb, gasLimit, gasPrice.BigInt())
+
 
 	var (
 		ret             []byte
@@ -167,14 +169,6 @@ func (st StateTransition) TransitionDb(ctx sdk.Context) (*ExecutionResult, error
 
 		bloomInt = ethtypes.LogsBloom(logs)
 		bloomFilter = ethtypes.BytesToBloom(bloomInt.Bytes())
-	}
-
-	if !st.Simulate {
-		// Finalise state if not a simulated transaction
-		// TODO: change to depend on config
-		if err := st.Csdb.Finalise(true); err != nil {
-			return nil, err
-		}
 	}
 
 	// Encode all necessary data into slice of bytes to return in sdk result

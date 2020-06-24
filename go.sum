@@ -420,6 +420,8 @@ github.com/landoyjx/cosmos-sdk v0.34.4-test.2 h1:yQPsTpUwoMxWTq761fUbZC+lfnZhAT2
 github.com/landoyjx/cosmos-sdk v0.34.4-test.2/go.mod h1:J2RTB23kBgFKwtKd7J/gk4WwG363cA/xM0GU1Gfztw4=
 github.com/landoyjx/cosmos-sdk v0.34.4-test.3 h1:ES5oQeN+U6VAcb/l63HSxohbY9VBFcx3RfdbZZIvPLs=
 github.com/landoyjx/cosmos-sdk v0.34.4-test.3/go.mod h1:J2RTB23kBgFKwtKd7J/gk4WwG363cA/xM0GU1Gfztw4=
+github.com/landoyjx/cosmos-sdk v0.34.4-test.4 h1:fqj9nDJo5M7fqrK56ISHZ+16rD6wXXj4oJV0p5XEGdE=
+github.com/landoyjx/cosmos-sdk v0.34.4-test.4/go.mod h1:J2RTB23kBgFKwtKd7J/gk4WwG363cA/xM0GU1Gfztw4=
 github.com/lib/pq v1.0.0/go.mod h1:5WUZQaWbwv1U+lTReE5YruASi9Al49XbQIvNi/34Woo=
 github.com/lib/pq v1.2.0/go.mod h1:5WUZQaWbwv1U+lTReE5YruASi9Al49XbQIvNi/34Woo=
 github.com/libp2p/go-buffer-pool v0.0.2 h1:QNK2iAFa8gjAe1SPz6mHSMuCcjs+X1wlHzeOSqcmlfs=

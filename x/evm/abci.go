@@ -1,7 +1,6 @@
 package evm
 
 import (
-	"fmt"
 	"math/big"
 
 	abci "github.com/tendermint/tendermint/abci/types"
@@ -28,10 +27,9 @@ func BeginBlock(k Keeper, ctx sdk.Context, req abci.RequestBeginBlock) {
 
 // EndBlock updates the accounts and commits states objects to the KV Store
 func EndBlock(k Keeper, ctx sdk.Context, _ abci.RequestEndBlock) []abci.ValidatorUpdate {
-	snapshot := k.CommitStateDB.Snapshot()
+	snapshot := k.CommitStateDB.WithContext(ctx).Snapshot()
 	defer func() {
 		if r := recover(); r != nil {
-			fmt.Println("error in ethermint end block", r);
 			k.RevertToSnapshot(ctx, snapshot)
 		}
 	}()
@@ -39,31 +37,11 @@ func EndBlock(k Keeper, ctx sdk.Context, _ abci.RequestEndBlock) []abci.Validato
 	// Gas costs are handled within msg handler so costs should be ignored
 	ctx = ctx.WithBlockGasMeter(sdk.NewInfiniteGasMeter())
 
-	currentGasMeter := ctx.GasMeter()
-
-	fmt.Println("end block ,before update accounts")
-	fmt.Println("gas meter10, ", "GasConsumed=", currentGasMeter.GasConsumed(),
-		"GasConsumedToLimit=", currentGasMeter.GasConsumedToLimit(),
-		"Limit=", currentGasMeter.Limit(),
-		"IsPastLimit=", currentGasMeter.IsPastLimit(),
-		"IsOutOfGas=", currentGasMeter.IsOutOfGas())
 	// Update account balances before committing other parts of state
 	k.CommitStateDB.UpdateAccounts()
-	fmt.Println("end block ,after update accounts")
-	fmt.Println("gas meter11, ", "GasConsumed=", currentGasMeter.GasConsumed(),
-		"GasConsumedToLimit=", currentGasMeter.GasConsumedToLimit(),
-		"Limit=", currentGasMeter.Limit(),
-		"IsPastLimit=", currentGasMeter.IsPastLimit(),
-		"IsOutOfGas=", currentGasMeter.IsOutOfGas())
 
 	// Commit state objects to KV store
 	_, err := k.CommitStateDB.WithContext(ctx).Commit(true)
-	fmt.Println("commit state")
-	fmt.Println("gas meter12, ", "GasConsumed=", currentGasMeter.GasConsumed(),
-		"GasConsumedToLimit=", currentGasMeter.GasConsumedToLimit(),
-		"Limit=", currentGasMeter.Limit(),
-		"IsPastLimit=", currentGasMeter.IsPastLimit(),
-		"IsOutOfGas=", currentGasMeter.IsOutOfGas())
 	if err != nil {
 		panic(err)
 	}
