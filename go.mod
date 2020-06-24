@@ -32,4 +32,4 @@ require (
 	gopkg.in/yaml.v2 v2.2.8
 )
 
-replace github.com/cosmos/cosmos-sdk => github.com/landoyjx/cosmos-sdk v0.34.4-test.3
+replace github.com/cosmos/cosmos-sdk => github.com/landoyjx/cosmos-sdk v0.34.4-test.4

@@ -1,6 +1,9 @@
 package evm
 
 import (
+	"bytes"
+	"encoding/json"
+	"fmt"
 	"math/big"
 
 	"github.com/ethereum/go-ethereum/common"
@@ -31,6 +34,29 @@ func NewHandler(k Keeper) sdk.Handler {
 // handleMsgEthereumTx handles an Ethereum specific tx
 func handleMsgEthereumTx(ctx sdk.Context, k Keeper, msg types.MsgEthereumTx) (*sdk.Result, error) {
 	// parse the chainID from a string to a base-10 integer
+	fmt.Println("enter ethereum tx")
+	b, err := json.Marshal(msg)
+	if err != nil {
+		fmt.Sprintf("%+v", msg)
+	}
+	var out bytes.Buffer
+	err = json.Indent(&out, b, "", "    ")
+	if err != nil {
+		fmt.Sprintf("%+v", msg)
+	}
+	fmt.Println(out.String())
+	// --------
+
+	snapshot := k.CommitStateDB.Snapshot()
+	defer func() {
+		if r := recover(); r != nil {
+			fmt.Println("error in handler msg ethereum tx", r);
+			k.RevertToSnapshot(ctx, snapshot)
+
+			panic(r)
+		}
+	}()
+
 	intChainID, ok := new(big.Int).SetString(ctx.ChainID(), 10)
 	if !ok {
 		return nil, sdkerrors.Wrap(emint.ErrInvalidChainID, ctx.ChainID())
@@ -59,6 +85,7 @@ func handleMsgEthereumTx(ctx sdk.Context, k Keeper, msg types.MsgEthereumTx) (*s
 		Simulate:     ctx.IsCheckTx(),
 	}
 
+
 	// Prepare db for logs
 	// TODO: block hash
 	k.CommitStateDB.Prepare(ethHash, common.Hash{}, k.TxCount)
@@ -78,6 +105,7 @@ func handleMsgEthereumTx(ctx sdk.Context, k Keeper, msg types.MsgEthereumTx) (*s
 	if err != nil {
 		return nil, err
 	}
+	fmt.Println("hello here")
 
 	// log successful execution
 	k.Logger(ctx).Info(executionResult.Result.Log)
