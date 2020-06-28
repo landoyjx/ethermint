@@ -46,6 +46,11 @@ func (k *Keeper) SetCode(ctx sdk.Context, addr ethcmn.Address, code []byte) {
 	k.CommitStateDB.WithContext(ctx).SetCode(addr, code)
 }
 
+// SetLogs calls CommitStateDB.SetLogs using the passed in context
+func (k *Keeper) SetLogs(ctx sdk.Context, hash ethcmn.Hash, logs []*ethtypes.Log) error {
+	return k.CommitStateDB.WithContext(ctx).SetLogs(hash, logs)
+}
+
 // AddLog calls CommitStateDB.AddLog using the passed in context
 func (k *Keeper) AddLog(ctx sdk.Context, log *ethtypes.Log) {
 	k.CommitStateDB.WithContext(ctx).AddLog(log)
@@ -149,7 +154,7 @@ func (k *Keeper) StorageTrie(ctx sdk.Context, addr ethcmn.Address) ethstate.Trie
 // Persistence
 // ----------------------------------------------------------------------------
 
-// Commit calls CommitStateDB.Commit using the passed { in context
+// Commit calls CommitStateDB.Commit using the passed in context
 func (k *Keeper) Commit(ctx sdk.Context, deleteEmptyObjects bool) (root ethcmn.Hash, err error) {
 	return k.CommitStateDB.WithContext(ctx).Commit(deleteEmptyObjects)
 }
@@ -221,6 +226,16 @@ func (k *Keeper) Prepare(ctx sdk.Context, thash, bhash ethcmn.Hash, txi int) {
 // CreateAccount calls CommitStateDB.CreateAccount using the passed in context
 func (k *Keeper) CreateAccount(ctx sdk.Context, addr ethcmn.Address) {
 	k.CommitStateDB.WithContext(ctx).CreateAccount(addr)
+}
+
+// UpdateAccounts calls CommitStateDB.UpdateAccounts using the passed in context
+func (k *Keeper) UpdateAccounts(ctx sdk.Context) {
+	k.CommitStateDB.WithContext(ctx).UpdateAccounts()
+}
+
+// ClearStateObjects calls CommitStateDB.ClearStateObjects using the passed in context
+func (k *Keeper) ClearStateObjects(ctx sdk.Context) {
+	k.CommitStateDB.WithContext(ctx).ClearStateObjects()
 }
 
 // Copy calls CommitStateDB.Copy using the passed in context

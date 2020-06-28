@@ -51,7 +51,6 @@ var (
 
 	accKey   = sdk.NewKVStoreKey(auth.StoreKey)
 	storeKey = sdk.NewKVStoreKey(evmtypes.StoreKey)
-	codeKey  = sdk.NewKVStoreKey(evmtypes.CodeKey)
 
 	logger = tmlog.NewNopLogger()
 
@@ -107,7 +106,7 @@ func createAndTestGenesis(t *testing.T, cms sdk.CommitMultiStore, ak auth.Accoun
 	ms := cms.CacheMultiStore()
 	ctx := sdk.NewContext(ms, abci.Header{}, false, logger)
 
-	stateDB := evmtypes.NewCommitStateDB(ctx, codeKey, storeKey, ak, bk)
+	stateDB := evmtypes.NewCommitStateDB(ctx, storeKey, ak, bk)
 
 	// sort the addresses and insertion of key/value pairs matters
 	genAddrs := make([]string, len(genBlock.Alloc))
@@ -132,7 +131,7 @@ func createAndTestGenesis(t *testing.T, cms sdk.CommitMultiStore, ak auth.Accoun
 		}
 	}
 
-	// get balance of one of the genesis account having 200 ETH
+	// get balance of one of the genesis account having 400 ETH
 	b := stateDB.GetBalance(genInvestor)
 	require.Equal(t, "200000000000000000000", b.String())
 
@@ -189,7 +188,7 @@ func TestImportBlocks(t *testing.T) {
 	bk := bank.NewBaseKeeper(appCodec, bankKey, ak, bankSubspace, nil)
 
 	// mount stores
-	keys := []*sdk.KVStoreKey{accKey, bankKey, storeKey, codeKey}
+	keys := []*sdk.KVStoreKey{accKey, bankKey, storeKey}
 	for _, key := range keys {
 		cms.MountStoreWithDB(key, sdk.StoreTypeIAVL, nil)
 	}
@@ -207,8 +206,7 @@ func TestImportBlocks(t *testing.T) {
 	blockchainInput, err := os.Open(flagBlockchain)
 	require.Nil(t, err)
 
-	// nolint: gosec
-	defer blockchainInput.Close()
+	defer require.NoError(t, blockchainInput.Close())
 
 	// ethereum mainnet config
 	chainContext := core.NewChainContext()
@@ -280,7 +278,7 @@ func TestImportBlocks(t *testing.T) {
 
 // nolint: interfacer
 func createStateDB(ctx sdk.Context, ak auth.AccountKeeper, bk bank.Keeper) *evmtypes.CommitStateDB {
-	return evmtypes.NewCommitStateDB(ctx, codeKey, storeKey, ak, bk)
+	return evmtypes.NewCommitStateDB(ctx, storeKey, ak, bk)
 }
 
 // accumulateRewards credits the coinbase of the given block with the mining
