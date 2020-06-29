@@ -74,9 +74,9 @@ func handleMsgEthereumTx(ctx sdk.Context, k Keeper, msg types.MsgEthereumTx) (*s
 	k.Bloom.Or(k.Bloom, executionResult.Bloom)
 
 	// update transaction logs in KVStore
-	err = k.SetTransactionLogs(ctx, executionResult.Logs, txHash)
+	err = k.SetLogs(ctx, common.BytesToHash(txHash), executionResult.Logs)
 	if err != nil {
-		return nil, err
+		panic(err)
 	}
 
 	// log successful execution
@@ -150,9 +150,9 @@ func handleMsgEthermint(ctx sdk.Context, k Keeper, msg types.MsgEthermint) (*sdk
 	k.Bloom.Or(k.Bloom, executionResult.Bloom)
 
 	// update transaction logs in KVStore
-	err = k.SetTransactionLogs(ctx, executionResult.Logs, txHash)
+	err = k.SetLogs(ctx, common.BytesToHash(txHash), executionResult.Logs)
 	if err != nil {
-		return nil, err
+		panic(err)
 	}
 
 	// log successful execution

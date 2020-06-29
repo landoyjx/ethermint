@@ -52,8 +52,16 @@ Ref: https://keepachangelog.com/en/1.0.0/
 * [\#236](https://github.com/ChainSafe/ethermint/pull/236) Changes from upgrade [@fedekunze](https://github.com/fedekunze)
   * (`app/ante`) Moved `AnteHandler` implementation to `app/ante`
   * (keys) Marked `ExportEthKeyCommand` as **UNSAFE**
-  * (`x/evm`) Moved `BeginBlock` and `EndBlock` to `x/evm/abci.go`
+  * (x/evm) Moved `BeginBlock` and `EndBlock` to `x/evm/abci.go`
+* (`x/evm`) [\#255](https://github.com/ChainSafe/ethermint/pull/255) Add missing `GenesisState` fields and support `ExportGenesis` functionality.
 * [\#272](https://github.com/ChainSafe/ethermint/pull/272) Add `Logger` for evm module.
+* [\#317](https://github.com/ChainSafe/ethermint/pull/317) `GenesisAccount` validation.
+* (`x/evm`) [\#319](https://github.com/ChainSafe/ethermint/pull/319) Verious evm improvements:
+  * Add transaction `[]*ethtypes.Logs` to evm's `GenesisState` to persist logs after an upgrade.
+  * Remove evm `CodeKey` and `BlockKey`in favor of a prefix `Store`.
+  * Set `BlockBloom` during `EndBlock` instead of `BeginBlock`.
+  * `Commit` state object and `Finalize` storage after `InitGenesis` setup.
+* (rpc) [\#325](https://github.com/ChainSafe/ethermint/pull/325) `eth_coinbase` JSON-RPC query now returns the node's validator address.
 
 ### Features
 
@@ -71,5 +79,7 @@ Ref: https://keepachangelog.com/en/1.0.0/
 
 ### Bug Fixes
 
+* (rpc) [\#305](https://github.com/ChainSafe/ethermint/issues/305) Update eth_getTransactionCount to check for account existence before getting sequence and return 0 as the nonce if it doesn't exist.
+* (`x/evm`) [\#319](https://github.com/ChainSafe/ethermint/pull/319) Fix `SetBlockHash` that was setting the incorrect height during `BeginBlock`.
 * (x/evm) [\#176](https://github.com/ChainSafe/ethermint/issues/176) Updated Web3 transaction hash from using RLP hash. Now all transaction hashes exposed are amino hashes.
   * Removes `Hash()` (RLP) function from `MsgEthereumTx` to avoid confusion or misuse in future.
