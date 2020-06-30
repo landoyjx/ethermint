@@ -9,23 +9,23 @@ rm -rf ~/.emint*
 
 make install
 
-emintcli config keyring-backend test
+hallecli config keyring-backend test
 
 # if mykey exists it should be deleted
-emintcli keys add $KEY
+hallecli keys add $KEY
 
 # Set moniker and chain-id for Ethermint (Moniker can be anything, chain-id must be an integer)
-emintd init $MONIKER --chain-id $CHAINID
+halled init $MONIKER --chain-id $CHAINID
 
 # Set up config for CLI
-emintcli config chain-id $CHAINID
-emintcli config output json
-emintcli config indent true
-emintcli config trust-node true
+hallecli config chain-id $CHAINID
+hallecli config output json
+hallecli config indent true
+hallecli config trust-node true
 
 # Allocate genesis accounts (cosmos formatted addresses)
-emintd add-genesis-account $(emintcli keys show $KEY -a) 1000000000000000000hale
+halled add-genesis-account $(hallecli keys show $KEY -a) 1000000000000000000hale
 
 # Sign genesis transaction
-emintd gentx --name $KEY --keyring-backend test
+halled gentx --name $KEY --keyring-backend test
 

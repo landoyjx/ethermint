@@ -187,7 +187,9 @@ test-cli test-race test-unit test test-import
 ### Testnet. ###
 #######################
 testnet_init:
-	@cp -R testnet/* build/
+	rm -rf build/node*
+	rm -rf build/clicfg
+	@cp -R scripts/testnet/* build/
 
 testnet_start:
 	docker-compose up -d
@@ -198,6 +200,7 @@ testnet_stop:
 testnet_clean:
 	docker-compose down
 	rm -rf build/node*
+	rm -rf build/clicfg
 
 
 ###############################################################################
