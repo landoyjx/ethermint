@@ -132,6 +132,10 @@ func handleMsgEthermint(ctx sdk.Context, k Keeper, msg types.MsgEthermint) (*sdk
 		Simulate:     ctx.IsCheckTx(),
 	}
 
+	if st.Simulate {
+		st.Csdb = st.Csdb.Copy()
+	}
+
 	if msg.Recipient != nil {
 		to := common.BytesToAddress(msg.Recipient.Bytes())
 		st.Recipient = &to
