@@ -26,10 +26,9 @@ hallecli config indent true
 hallecli config trust-node true
 
 # if $KEY exists it should be deleted
-emintcli keys add $KEY
+
 
 # Set moniker and chain-id for Ethermint (Moniker can be anything, chain-id must be an integer)
-emintd init $MONIKER --chain-id $CHAINID
 
 # Allocate genesis accounts (cosmos formatted addresses)
 halled add-genesis-account $(hallecli keys show $KEY -a) 1000000000000000000hale
