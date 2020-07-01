@@ -25,6 +25,11 @@ hallecli config output json
 hallecli config indent true
 hallecli config trust-node true
 
+# if $KEY exists it should be deleted
+
+
+# Set moniker and chain-id for Ethermint (Moniker can be anything, chain-id must be an integer)
+
 # Allocate genesis accounts (cosmos formatted addresses)
 halled add-genesis-account $(hallecli keys show $KEY -a) 1000000000000000000hale
 halled add-genesis-account $(hallecli keys show $KEY2 -a) 1000hale    --vesting-amount 600hale  --vesting-start-time  1591781100   --vesting-end-time  1591781700
