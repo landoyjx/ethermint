@@ -174,6 +174,8 @@ rm -f testnet/node17/config/genesis.json
 rm -f testnet/node18/config/genesis.json
 rm -f testnet/node19/config/genesis.json
 
+cat  testnet/node0/config/genesis.json | jq '.app_state["faucet"]["enable_faucet"]=true' >  testnet/node0/config/tmp_genesis.json && mv  testnet/node0/config/tmp_genesis.json   testnet/node0/config/genesis.json
+
 cp testnet/node0/config/genesis.json testnet/node1/config/
 cp testnet/node0/config/genesis.json testnet/node2/config/
 cp testnet/node0/config/genesis.json testnet/node3/config/
