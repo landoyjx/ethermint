@@ -5,6 +5,14 @@ import (
 	"runtime"
 )
 
+var (
+	VERSION     string
+	BUILD_TIME  string
+	GO_VERSION  string
+	GIT_BRANCH  string
+	COMMIT_SHA1 string
+)
+
 // AppName represents the application name as the 'user agent' on the larger Ethereum network.
 const AppName = "Ethermint"
 
