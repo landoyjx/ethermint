@@ -1,4 +1,5 @@
 # 1. hallecli init
+echot "hallecli init"
 rm -rf ~/.halle*
 hallecli config keyring-backend test
 hallecli config chain-id 8
@@ -7,6 +8,7 @@ hallecli config indent true
 hallecli config trust-node true
 
 # 2. init
+echo "halled init"
 rm -rf testnet/*
 halled init node0 --chain-id 8 --home testnet/node0
 halled init node1 --chain-id 8 --home testnet/node1
@@ -31,6 +33,7 @@ halled init node19 --chain-id 8 --home testnet/node19
 
 
 # 3. create genesis accounts
+echo "hallecli keys add"
 hallecli keys add mykey0
 hallecli keys add mykey1
 hallecli keys add mykey2
@@ -53,6 +56,7 @@ hallecli keys add mykey18
 hallecli keys add mykey19
 
 # 4. add genesis accounts to genesis.json
+echo "halled add-genesis-account"
 halled add-genesis-account $(hallecli keys show mykey0 -a) 1000000000000000000hale --home testnet/node0
 halled add-genesis-account $(hallecli keys show mykey1 -a) 1000000000000000000hale --home testnet/node0
 halled add-genesis-account $(hallecli keys show mykey2 -a) 1000000000000000000hale --home testnet/node0
@@ -73,11 +77,32 @@ halled add-genesis-account $(hallecli keys show mykey16 -a) 1000000000000000000h
 halled add-genesis-account $(hallecli keys show mykey17 -a) 1000000000000000000hale --home testnet/node0
 halled add-genesis-account $(hallecli keys show mykey18 -a) 1000000000000000000hale --home testnet/node0
 halled add-genesis-account $(hallecli keys show mykey19 -a) 1000000000000000000hale --home testnet/node0
+#
+# # halled add-genesis-account $(hallecli keys show mykey1 -a) 1000000000000000000hale --home testnet/node1
+# # halled add-genesis-account $(hallecli keys show mykey2 -a) 1000000000000000000hale --home testnet/node2
+halled add-genesis-account $(hallecli keys show mykey1 -a) 1000000000000000000hale --home testnet/node1
+halled add-genesis-account $(hallecli keys show mykey2 -a) 1000000000000000000hale --home testnet/node2
+halled add-genesis-account $(hallecli keys show mykey3 -a) 1000000000000000000hale --home testnet/node3
+halled add-genesis-account $(hallecli keys show mykey4 -a) 1000000000000000000hale --home testnet/node4
+halled add-genesis-account $(hallecli keys show mykey5 -a) 1000000000000000000hale --home testnet/node5
+halled add-genesis-account $(hallecli keys show mykey6 -a) 1000000000000000000hale --home testnet/node6
+halled add-genesis-account $(hallecli keys show mykey7 -a) 1000000000000000000hale --home testnet/node7
+halled add-genesis-account $(hallecli keys show mykey8 -a) 1000000000000000000hale --home testnet/node8
+halled add-genesis-account $(hallecli keys show mykey9 -a) 1000000000000000000hale --home testnet/node9
+halled add-genesis-account $(hallecli keys show mykey10 -a) 1000000000000000000hale --home testnet/node10
+halled add-genesis-account $(hallecli keys show mykey11 -a) 1000000000000000000hale --home testnet/node11
+halled add-genesis-account $(hallecli keys show mykey12 -a) 1000000000000000000hale --home testnet/node12
+halled add-genesis-account $(hallecli keys show mykey13 -a) 1000000000000000000hale --home testnet/node13
+halled add-genesis-account $(hallecli keys show mykey14 -a) 1000000000000000000hale --home testnet/node14
+halled add-genesis-account $(hallecli keys show mykey15 -a) 1000000000000000000hale --home testnet/node15
+halled add-genesis-account $(hallecli keys show mykey16 -a) 1000000000000000000hale --home testnet/node16
+halled add-genesis-account $(hallecli keys show mykey17 -a) 1000000000000000000hale --home testnet/node17
+halled add-genesis-account $(hallecli keys show mykey18 -a) 1000000000000000000hale --home testnet/node18
+halled add-genesis-account $(hallecli keys show mykey19 -a) 1000000000000000000hale --home testnet/node19
 
-# halled add-genesis-account $(hallecli keys show mykey1 -a) 1000000000000000000hale --home testnet/node1
-# halled add-genesis-account $(hallecli keys show mykey2 -a) 1000000000000000000hale --home testnet/node2
-
-# 5. create gentxs
+#
+# # 5. create gentxs
+echo "create gentxs-----------------------------"
 halled gentx --name mykey0 --home testnet/node0 --ip 192.168.20.2 --node-id $(halled tendermint show-node-id --home testnet/node0) --keyring-backend test
 halled gentx --name mykey1 --home testnet/node1 --ip 192.168.20.3 --node-id $(halled tendermint show-node-id --home testnet/node1) --keyring-backend test
 halled gentx --name mykey2 --home testnet/node2 --ip 192.168.20.4 --node-id $(halled tendermint show-node-id --home testnet/node2) --keyring-backend test
@@ -98,9 +123,10 @@ halled gentx --name mykey16 --home testnet/node16 --ip 192.168.20.18 --node-id $
 halled gentx --name mykey17 --home testnet/node17 --ip 192.168.20.19 --node-id $(halled tendermint show-node-id --home testnet/node17) --keyring-backend test
 halled gentx --name mykey18 --home testnet/node18 --ip 192.168.20.20 --node-id $(halled tendermint show-node-id --home testnet/node18) --keyring-backend test
 halled gentx --name mykey19 --home testnet/node19 --ip 192.168.20.21 --node-id $(halled tendermint show-node-id --home testnet/node19) --keyring-backend test
-
-
-# 6. collect-gentxs to genesis.json
+#
+#
+# # 6. collect-gentxs to genesis.json
+echo "collect-gentxs to genesis.json"
 cp testnet/node1/config/gentx/* testnet/node0/config/gentx/
 cp testnet/node2/config/gentx/* testnet/node0/config/gentx/
 cp testnet/node3/config/gentx/* testnet/node0/config/gentx/
@@ -122,9 +148,10 @@ cp testnet/node18/config/gentx/* testnet/node0/config/gentx/
 cp testnet/node19/config/gentx/* testnet/node0/config/gentx/
 
 halled collect-gentxs --home testnet/node0
-
-
-# 7. collect node1 and node2 genesis.json gentxs, copy to node0 genesis.json gentxs, copy node0 genesis.json to replace others
+#
+#
+# # 7. collect node1 and node2 genesis.json gentxs, copy to node0 genesis.json gentxs, copy node0 genesis.json to replace others
+echo "collect node1 and node2 genesis.json gentxs, copy to node0 genesis.json gentxs, copy node0 genesis.json to replace others"
 rm -f testnet/node1/config/genesis.json
 rm -f testnet/node2/config/genesis.json
 rm -f testnet/node3/config/genesis.json
@@ -165,7 +192,7 @@ cp testnet/node0/config/genesis.json testnet/node17/config/
 cp testnet/node0/config/genesis.json testnet/node18/config/
 cp testnet/node0/config/genesis.json testnet/node19/config/
 
-# 8. config each node's config.toml persistent_peers to the other two node's node-id@node-ip:26656
+# # 8. config each node's config.toml persistent_peers to the other two node's node-id@node-ip:26656
 os=`uname -a`
 mac='Darwin'
 peers=`halled tendermint show-node-id --home testnet/node0`@192.168.20.2:26656,`halled tendermint show-node-id --home testnet/node1`@192.168.20.3:26656,`halled tendermint show-node-id --home testnet/node2`@192.168.20.4:26656
