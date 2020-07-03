@@ -61,7 +61,7 @@ func main() {
 	rootCmd.PersistentPreRunE = func(_ *cobra.Command, _ []string) error {
 		return initConfig(rootCmd)
 	}
-
+  rootCmd.AddCommand(versionCmd)
 	// Construct Root Command
 	rootCmd.AddCommand(
 		clientrpc.StatusCommand(),
