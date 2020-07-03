@@ -55,6 +55,8 @@ hallecli keys add mykey17
 hallecli keys add mykey18
 hallecli keys add mykey19
 
+cp -R  ~/.hallecli   testnet/clicfg
+
 # 4. add genesis accounts to genesis.json
 echo "halled add-genesis-account"
 halled add-genesis-account $(hallecli keys show mykey0 -a) 1000000000000000000hale --home testnet/node0
@@ -124,7 +126,7 @@ halled gentx --name mykey17 --home testnet/node17 --ip 192.168.20.19 --node-id $
 halled gentx --name mykey18 --home testnet/node18 --ip 192.168.20.20 --node-id $(halled tendermint show-node-id --home testnet/node18) --keyring-backend test
 halled gentx --name mykey19 --home testnet/node19 --ip 192.168.20.21 --node-id $(halled tendermint show-node-id --home testnet/node19) --keyring-backend test
 #
-#
+
 # # 6. collect-gentxs to genesis.json
 echo "collect-gentxs to genesis.json"
 cp testnet/node1/config/gentx/* testnet/node0/config/gentx/

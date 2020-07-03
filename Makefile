@@ -177,7 +177,6 @@ test-cli test-race test-unit test test-import
 #######################
 testnet_init:
 	@cp -R testnet/* build/
-	@cp -R  ~/.hallecli/*  build/clicfg
 
 testnet_start:
 	docker-compose up -d
