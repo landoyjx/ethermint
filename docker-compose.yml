@@ -9,7 +9,7 @@ services:
     - "8545:8545"
     volumes:
     - ./build:/home
-    command: /bin/bash -c 'cd /home/   && nohup ./hallecli rest-server --laddr tcp://0.0.0.0:8545 --home ./clicfg/ --unlock-key mykey0 >> rest-server.log   && ./halled start --home node0 --log_level info --rpc.unsafe'
+    command: /bin/bash -c 'cd /home/  && ./halled start --home node0 --log_level info --rpc.unsafe'
     networks:
       localnet:
         ipv4_address: 192.168.20.2
