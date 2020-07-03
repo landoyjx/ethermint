@@ -6,6 +6,7 @@ services:
     image: ubuntu:16.04
     ports:
     - "26656-26657:26656-26657"
+    - "8545-8545"
     volumes:
     - ./build:/home
     command: /bin/bash -c 'cd /home/ && ./halled start --home node0 --log_level info --rpc.unsafe'
@@ -36,6 +37,209 @@ services:
     networks:
       localnet:
         ipv4_address: 192.168.20.4
+  node3:
+    container_name: node3
+    image: ubuntu:16.04
+    ports:
+    - "26656-26657:26656-26657"
+    volumes:
+    - ./build:/home
+    command: /bin/bash -c 'cd /home/ && ./halled start --home node3 --log_level info --rpc.unsafe'
+    networks:
+      localnet:
+        ipv4_address: 192.168.20.5
+
+  node4:
+    container_name: node4
+    image: ubuntu:16.04
+    ports:
+    - "26659-26660:26656-26657"
+    volumes:
+    - ./build:/home
+    command: /bin/bash -c 'cd /home/ && ./halled start --home node4 --log_level info --rpc.unsafe'
+    networks:
+      localnet:
+        ipv4_address: 192.168.20.6
+
+  node5:
+    container_name: node5
+    image: ubuntu:16.04
+    ports:
+    - "26661-26662:26656-26657"
+    volumes:
+    - ./build:/home
+    command: /bin/bash -c 'cd /home/ && ./halled start --home node5 --log_level info --rpc.unsafe'
+    networks:
+      localnet:
+        ipv4_address: 192.168.20.7
+
+  node6:
+    container_name: node6
+    image: ubuntu:16.04
+    ports:
+    - "26656-26657:26656-26657"
+    volumes:
+    - ./build:/home
+    command: /bin/bash -c 'cd /home/ && ./halled start --home node6 --log_level info --rpc.unsafe'
+    networks:
+      localnet:
+        ipv4_address: 192.168.20.8
+
+  node7:
+    container_name: node7
+    image: ubuntu:16.04
+    ports:
+    - "26659-26660:26656-26657"
+    volumes:
+    - ./build:/home
+    command: /bin/bash -c 'cd /home/ && ./halled start --home node7 --log_level info --rpc.unsafe'
+    networks:
+      localnet:
+        ipv4_address: 192.168.20.9
+
+  node8:
+    container_name: node8
+    image: ubuntu:16.04
+    ports:
+    - "26661-26662:26656-26657"
+    volumes:
+    - ./build:/home
+    command: /bin/bash -c 'cd /home/ && ./halled start --home node8 --log_level info --rpc.unsafe'
+    networks:
+      localnet:
+        ipv4_address: 192.168.20.10
+
+  node9:
+    container_name: node9
+    image: ubuntu:16.04
+    ports:
+    - "26656-26657:26656-26657"
+    volumes:
+    - ./build:/home
+    command: /bin/bash -c 'cd /home/ && ./halled start --home node9 --log_level info --rpc.unsafe'
+    networks:
+      localnet:
+        ipv4_address: 192.168.20.11
+
+  node10:
+    container_name: node10
+    image: ubuntu:16.04
+    ports:
+    - "26659-26660:26656-26657"
+    volumes:
+    - ./build:/home
+    command: /bin/bash -c 'cd /home/ && ./halled start --home node10 --log_level info --rpc.unsafe'
+    networks:
+      localnet:
+        ipv4_address: 192.168.20.12
+
+  node11:
+    container_name: node11
+    image: ubuntu:16.04
+    ports:
+    - "26661-26662:26656-26657"
+    volumes:
+    - ./build:/home
+    command: /bin/bash -c 'cd /home/ && ./halled start --home node11 --log_level info --rpc.unsafe'
+    networks:
+      localnet:
+        ipv4_address: 192.168.20.13
+
+  node12:
+    container_name: node12
+    image: ubuntu:16.04
+    ports:
+    - "26656-26657:26656-26657"
+    volumes:
+    - ./build:/home
+    command: /bin/bash -c 'cd /home/ && ./halled start --home node12 --log_level info --rpc.unsafe'
+    networks:
+      localnet:
+        ipv4_address: 192.168.20.14
+
+  node13:
+    container_name: node13
+    image: ubuntu:16.04
+    ports:
+    - "26659-26660:26656-26657"
+    volumes:
+    - ./build:/home
+    command: /bin/bash -c 'cd /home/ && ./halled start --home node13 --log_level info --rpc.unsafe'
+    networks:
+      localnet:
+        ipv4_address: 192.168.20.15
+
+  node14:
+    container_name: node14
+    image: ubuntu:16.04
+    ports:
+    - "26661-26662:26656-26657"
+    volumes:
+    - ./build:/home
+    command: /bin/bash -c 'cd /home/ && ./halled start --home node14 --log_level info --rpc.unsafe'
+    networks:
+      localnet:
+        ipv4_address: 192.168.20.16
+
+  node15:
+    container_name: node15
+    image: ubuntu:16.04
+    ports:
+    - "26656-26657:26656-26657"
+    volumes:
+    - ./build:/home
+    command: /bin/bash -c 'cd /home/ && ./halled start --home node15 --log_level info --rpc.unsafe'
+    networks:
+      localnet:
+        ipv4_address: 192.168.20.17
+
+  node16:
+    container_name: node16
+    image: ubuntu:16.04
+    ports:
+    - "26659-26660:26656-26657"
+    volumes:
+    - ./build:/home
+    command: /bin/bash -c 'cd /home/ && ./halled start --home node16 --log_level info --rpc.unsafe'
+    networks:
+      localnet:
+        ipv4_address: 192.168.20.18
+
+  node17:
+    container_name: node17
+    image: ubuntu:16.04
+    ports:
+    - "26661-26662:26656-26657"
+    volumes:
+    - ./build:/home
+    command: /bin/bash -c 'cd /home/ && ./halled start --home node17 --log_level info --rpc.unsafe'
+    networks:
+      localnet:
+        ipv4_address: 192.168.20.19
+
+  node18:
+    container_name: node18
+    image: ubuntu:16.04
+    ports:
+    - "26661-26662:26656-26657"
+    volumes:
+    - ./build:/home
+    command: /bin/bash -c 'cd /home/ && ./halled start --home node18 --log_level info --rpc.unsafe'
+    networks:
+      localnet:
+        ipv4_address: 192.168.20.20
+
+  node19:
+    container_name: node19
+    image: ubuntu:16.04
+    ports:
+    - "26661-26662:26656-26657"
+    volumes:
+    - ./build:/home
+    command: /bin/bash -c 'cd /home/ && ./halled start --home node19 --log_level info --rpc.unsafe'
+    networks:
+      localnet:
+        ipv4_address: 192.168.20.21
 
 networks:
   localnet:
