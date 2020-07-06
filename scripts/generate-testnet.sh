@@ -76,6 +76,26 @@ halled add-genesis-account $(hallecli keys show mykey19 -a) 1000000000000000000h
 
 # halled add-genesis-account $(hallecli keys show mykey1 -a) 1000000000000000000hale --home testnet/node1
 # halled add-genesis-account $(hallecli keys show mykey2 -a) 1000000000000000000hale --home testnet/node2
+halled add-genesis-account $(hallecli keys show mykey1 -a) 1000000000000000000hale --home testnet/node1
+halled add-genesis-account $(hallecli keys show mykey2 -a) 1000000000000000000hale --home testnet/node2
+halled add-genesis-account $(hallecli keys show mykey3 -a) 1000000000000000000hale --home testnet/node3
+halled add-genesis-account $(hallecli keys show mykey4 -a) 1000000000000000000hale --home testnet/node4
+halled add-genesis-account $(hallecli keys show mykey5 -a) 1000000000000000000hale --home testnet/node5
+halled add-genesis-account $(hallecli keys show mykey6 -a) 1000000000000000000hale --home testnet/node6
+halled add-genesis-account $(hallecli keys show mykey7 -a) 1000000000000000000hale --home testnet/node7
+halled add-genesis-account $(hallecli keys show mykey8 -a) 1000000000000000000hale --home testnet/node8
+halled add-genesis-account $(hallecli keys show mykey9 -a) 1000000000000000000hale --home testnet/node9
+halled add-genesis-account $(hallecli keys show mykey10 -a) 1000000000000000000hale --home testnet/node10
+halled add-genesis-account $(hallecli keys show mykey11 -a) 1000000000000000000hale --home testnet/node11
+halled add-genesis-account $(hallecli keys show mykey12 -a) 1000000000000000000hale --home testnet/node12
+halled add-genesis-account $(hallecli keys show mykey13 -a) 1000000000000000000hale --home testnet/node13
+halled add-genesis-account $(hallecli keys show mykey14 -a) 1000000000000000000hale --home testnet/node14
+halled add-genesis-account $(hallecli keys show mykey15 -a) 1000000000000000000hale --home testnet/node15
+halled add-genesis-account $(hallecli keys show mykey16 -a) 1000000000000000000hale --home testnet/node16
+halled add-genesis-account $(hallecli keys show mykey17 -a) 1000000000000000000hale --home testnet/node17
+halled add-genesis-account $(hallecli keys show mykey18 -a) 1000000000000000000hale --home testnet/node18
+halled add-genesis-account $(hallecli keys show mykey19 -a) 1000000000000000000hale --home testnet/node19
+
 
 # 5. create gentxs
 halled gentx --name mykey0 --home testnet/node0 --ip 192.168.20.2 --node-id $(halled tendermint show-node-id --home testnet/node0) --keyring-backend test
