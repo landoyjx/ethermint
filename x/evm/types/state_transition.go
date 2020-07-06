@@ -65,7 +65,6 @@ func (st StateTransition) newEVM(ctx sdk.Context, csdb *CommitStateDB, gasLimit 
 	return vm.NewEVM(context, csdb, GenerateChainConfig(st.ChainID), vm.Config{})
 }
 
-
 // TransitionDb will transition the state by applying the current transaction and
 // returning the evm execution result.
 // NOTE: State transition checks are run during AnteHandler execution.
@@ -97,11 +96,6 @@ func (st StateTransition) TransitionDb(ctx sdk.Context) (*ExecutionResult, error
 
 	// This gas meter is set up to consume gas from gaskv during evm execution and be ignored
 	currentGasMeter := ctx.GasMeter()
-	fmt.Println("gas meter0, ", "GasConsumed=", currentGasMeter.GasConsumed(),
-		"GasConsumedToLimit=", currentGasMeter.GasConsumedToLimit(),
-		"Limit=", currentGasMeter.Limit(),
-		"IsPastLimit=", currentGasMeter.IsPastLimit(),
-		"IsOutOfGas=", currentGasMeter.IsOutOfGas())
 
 	evmGasMeter := sdk.NewInfiniteGasMeter()
 	csdb.WithContext(ctx.WithGasMeter(evmGasMeter))
@@ -115,7 +109,6 @@ func (st StateTransition) TransitionDb(ctx sdk.Context) (*ExecutionResult, error
 	}
 
 	evm := st.newEVM(ctx, csdb, gasLimit, gasPrice.BigInt())
-
 
 	var (
 		ret             []byte
@@ -211,13 +204,6 @@ func (st StateTransition) TransitionDb(ctx sdk.Context) (*ExecutionResult, error
 	// Consume gas from evm execution
 	// Out of gas check does not need to be done here since it is done within the EVM execution
 	ctx.WithGasMeter(currentGasMeter).GasMeter().ConsumeGas(gasConsumed, "EVM execution consumption")
-
-	fmt.Println("gas meter1, ", "GasConsumed=", currentGasMeter.GasConsumed(),
-		"GasConsumedToLimit=", currentGasMeter.GasConsumedToLimit(),
-		"Limit=", currentGasMeter.Limit(),
-		"IsPastLimit=", currentGasMeter.IsPastLimit(),
-		"IsOutOfGas=", currentGasMeter.IsOutOfGas())
-
 
 	return executionResult, nil
 }

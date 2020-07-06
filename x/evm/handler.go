@@ -1,7 +1,6 @@
 package evm
 
 import (
-	"fmt"
 	"math/big"
 
 	"github.com/ethereum/go-ethereum/common"
@@ -20,10 +19,8 @@ func NewHandler(k Keeper) sdk.Handler {
 		ctx = ctx.WithEventManager(sdk.NewEventManager())
 		switch msg := msg.(type) {
 		case types.MsgEthereumTx:
-			fmt.Println("one ethereum tx")
 			return handleMsgEthereumTx(ctx, k, msg)
 		case types.MsgEthermint:
-			fmt.Println("one ethermint tx")
 			return handleMsgEthermint(ctx, k, msg)
 		default:
 			return nil, sdkerrors.Wrapf(sdkerrors.ErrUnknownRequest, "unrecognized %s message type: %T", ModuleName, msg)
@@ -66,7 +63,6 @@ func handleMsgEthereumTx(ctx sdk.Context, k Keeper, msg types.MsgEthereumTx) (*s
 	snapshot := k.CommitStateDB.WithContext(ctx).Snapshot()
 	defer func() {
 		if r := recover(); r != nil {
-			fmt.Println("error in handler msg ethereum tx", r, "gas comsumed=", ctx.GasMeter().GasConsumed());
 			k.RevertToSnapshot(ctx, snapshot)
 			panic(r)
 		}
@@ -153,14 +149,12 @@ func handleMsgEthermint(ctx sdk.Context, k Keeper, msg types.MsgEthermint) (*sdk
 	}
 
 	if st.Simulate {
-		fmt.Println("simulate tx")
 		st.Csdb = st.Csdb.Copy()
 	}
 
 	snapshot := k.CommitStateDB.WithContext(ctx).Snapshot()
 	defer func() {
 		if r := recover(); r != nil {
-			fmt.Println("error in handler msg ethermint tx", r, "gas comsumed=", ctx.GasMeter().GasConsumed());
 			k.RevertToSnapshot(ctx, snapshot)
 			panic(r)
 		}
