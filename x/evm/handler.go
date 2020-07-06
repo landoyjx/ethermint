@@ -20,8 +20,10 @@ func NewHandler(k Keeper) sdk.Handler {
 		ctx = ctx.WithEventManager(sdk.NewEventManager())
 		switch msg := msg.(type) {
 		case types.MsgEthereumTx:
+			fmt.Println("one ethereum tx")
 			return handleMsgEthereumTx(ctx, k, msg)
 		case types.MsgEthermint:
+			fmt.Println("one ethermint tx")
 			return handleMsgEthermint(ctx, k, msg)
 		default:
 			return nil, sdkerrors.Wrapf(sdkerrors.ErrUnknownRequest, "unrecognized %s message type: %T", ModuleName, msg)
@@ -148,6 +150,11 @@ func handleMsgEthermint(ctx sdk.Context, k Keeper, msg types.MsgEthermint) (*sdk
 		TxHash:       &ethHash,
 		Sender:       common.BytesToAddress(msg.From.Bytes()),
 		Simulate:     ctx.IsCheckTx(),
+	}
+
+	if st.Simulate {
+		fmt.Println("simulate tx")
+		st.Csdb = st.Csdb.Copy()
 	}
 
 	snapshot := k.CommitStateDB.WithContext(ctx).Snapshot()
