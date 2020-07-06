@@ -48,4 +48,4 @@ echo -e '\n\nRun this rest-server command in a different terminal/window:'
 echo -e "hallecli rest-server --laddr \"tcp://localhost:8545\" --unlock-key $KEY --chain-id $CHAINID\n\n"
 
 # Start the node (remove the --pruning=nothing flag if historical queries are not needed)
-halled start  --minimum-gas-prices  1hale  --pruning=nothing --rpc.unsafe --log_level "main:info,state:info,mempool:info"
+halled start  --minimum-gas-prices  1.0hale  --pruning=nothing --rpc.unsafe --log_level "main:info,state:info,mempool:info"
