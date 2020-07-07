@@ -1,6 +1,7 @@
 package cli
 
 import (
+	"fmt"
 	"bufio"
 	"strconv"
 	"strings"
@@ -154,7 +155,11 @@ func GetCmdGenCreateTx(cdc *codec.Codec) *cobra.Command {
 			}
 
 			contractAddr := ethcrypto.CreateAddress(common.BytesToAddress(from.Bytes()), seq)
-
+			fmt.Printf(
+				"Contract will be deployed to: \nHex: %s\nCosmos Address: %s\n",
+				contractAddr.Hex(),
+				sdk.AccAddress(contractAddr.Bytes()),
+			)
 			return nil
 		},
 	}
