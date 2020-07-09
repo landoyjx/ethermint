@@ -29,6 +29,7 @@ import (
 	"github.com/cosmos/ethermint/app/ante"
 	eminttypes "github.com/cosmos/ethermint/types"
 	"github.com/cosmos/ethermint/x/evm"
+	"github.com/cosmos/ethermint/x/escrow"
 
 	abci "github.com/tendermint/tendermint/abci/types"
 	"github.com/tendermint/tendermint/libs/log"
@@ -64,6 +65,7 @@ var (
 		slashing.AppModuleBasic{},
 		evidence.AppModuleBasic{},
 		evm.AppModuleBasic{},
+		escrow.AppModuleBasic{},
 	)
 
 	// module account permissions
@@ -113,6 +115,7 @@ type EthermintApp struct {
 	ParamsKeeper   params.Keeper
 	EvidenceKeeper evidence.Keeper
 	EvmKeeper      evm.Keeper
+	EscrowKeeper   escrow.Keeper
 
 	// the module manager
 	mm *module.Manager
@@ -143,7 +146,7 @@ func NewEthermintApp(
 	keys := sdk.NewKVStoreKeys(
 		bam.MainStoreKey, auth.StoreKey, bank.StoreKey, staking.StoreKey,
 		supply.StoreKey, mint.StoreKey, distr.StoreKey, slashing.StoreKey,
-		gov.StoreKey, params.StoreKey, evidence.StoreKey, evm.CodeKey, evm.StoreKey,
+		gov.StoreKey, params.StoreKey, evidence.StoreKey, evm.CodeKey, evm.StoreKey,escrow.StoreKey,
 	)
 	blockKey := sdk.NewKVStoreKey(evm.BlockKey)
 
@@ -202,6 +205,10 @@ func NewEthermintApp(
 		app.BankKeeper,
 	)
 
+	app.EscrowKeeper = escrow.NewKeeper(
+		app.cdc,app.BankKeeper, keys[escrow.StoreKey],
+	)
+
 	// create evidence keeper with router
 	evidenceKeeper := evidence.NewKeeper(
 		appCodec, keys[evidence.StoreKey], app.subspaces[evidence.ModuleName], &app.StakingKeeper, app.SlashingKeeper,
@@ -242,6 +249,7 @@ func NewEthermintApp(
 		staking.NewAppModule(app.StakingKeeper, app.AccountKeeper, app.BankKeeper, app.SupplyKeeper),
 		evidence.NewAppModule(app.EvidenceKeeper),
 		evm.NewAppModule(app.EvmKeeper),
+		escrow.NewAppModule(app.EscrowKeeper),
 	)
 
 	// During begin block slashing happens after distr.BeginBlocker so that
@@ -252,7 +260,7 @@ func NewEthermintApp(
 		evidence.ModuleName,
 	)
 	app.mm.SetOrderEndBlockers(
-		evm.ModuleName, crisis.ModuleName, gov.ModuleName, staking.ModuleName,
+	  escrow.ModuleName,	evm.ModuleName, crisis.ModuleName, gov.ModuleName, staking.ModuleName,
 	)
 
 	// NOTE: The genutils module must occur after staking so that pools are
