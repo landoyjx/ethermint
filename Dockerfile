@@ -2,29 +2,28 @@ FROM golang:alpine AS build-env
 
 # Set up dependencies
 ENV PACKAGES git build-base
+ENV GOPROXY https://mirrors.aliyun.com/goproxy/
 
-# Set working directory for the build
-WORKDIR /go/src/github.com/Chainsafe/ethermint
 
-# Install dependencies
-RUN apk add --update $PACKAGES
+ENV GOPATH /root/go
+ENV REPO_PATH $GOPATH/src/github.com/landoyjx/ethermint
+ENV GO111MODULE on
+COPY . $REPO_PATH/
+WORKDIR $REPO_PATH
 
-# Add source files
-COPY . .
+RUN mkdir -p $REPO_PATH/build && apk add --no-cache $PACKAGES   && make build
 
-# Make the binary
-RUN make build
 
 # Final image
 FROM alpine
 
-# Install ca-certificates
-RUN apk add --update ca-certificates
-WORKDIR /root
+ENV GOPATH /root/go
+ENV REPO_PATH $GOPATH/src/github.com/landoyjx/ethermint
 
-# Copy over binaries from the build-env
-COPY --from=build-env /go/src/github.com/Chainsafe/ethermint/build/emintd /usr/bin/emintd
-COPY --from=build-env /go/src/github.com/Chainsafe/ethermint/build/emintcli /usr/bin/emintcli
+WORKDIR /usr/bin/
 
-# Run emintd by default
-CMD ["emintd"]
+COPY --from=build-env $REPO_PATH/build/halled /usr/bin/halled
+COPY --from=build-env $REPO_PATH/build/hallecli /usr/bin/hallecli
+
+# Run halled by default
+CMD ["halled","start","--minimum-gas-prices","5.0hale","--pruning=nothing","--rpc.unsafe","--log_level","main:info,state:info,mempool:info"]
