@@ -2,6 +2,7 @@ package escrow
 
 import (
 	"encoding/json"
+
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/gorilla/mux"
 	"github.com/spf13/cobra"
@@ -9,11 +10,9 @@ import (
 
 	"github.com/cosmos/cosmos-sdk/client/context"
 	"github.com/cosmos/cosmos-sdk/codec"
-	// "github.com/vbstreetz/coin-price-bet/x/coin_price_bet/client/cli"
-	// "github.com/vbstreetz/coin-price-bet/x/coin_price_bet/client/rest"
+
 	"github.com/cosmos/ethermint/x/escrow/client/cli"
 	"github.com/cosmos/ethermint/x/escrow/client/rest"
-
 )
 
 // AppModule Basics object
@@ -54,7 +53,7 @@ func (AppModuleBasic) GetQueryCmd(cdc *codec.Codec) *cobra.Command {
 
 // Get the root tx command of this module
 func (AppModuleBasic) GetTxCmd(cdc *codec.Codec) *cobra.Command {
-	return cli.GetTxCmd(StoreKey, cdc)
+	return cli.GetTxCmd(cdc)
 }
 
 type AppModule struct {
