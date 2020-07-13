@@ -1,7 +1,9 @@
 package keeper
 
 import (
+	"encoding/json"
 	"strings"
+	"time"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
@@ -23,8 +25,48 @@ func (k Keeper) EscrowCoin(ctx sdk.Context, buyer sdk.AccAddress, amount sdk.Coi
 	return k.BankKeeper.SendCoins(ctx, buyer, escrowAddress, amount)
 }
 
-func (k Keeper) GetDayReceiverAmount(ctx sdk.Context, blockHeight int64, receiver string) int64 {
-	storeKey := types.DayReceiverAmountStoreKey(blockHeight, receiver)
+type DayIdInfo struct {
+	DayId      int64     `json:"day_id"`
+	UnlockTime time.Time `json:"unlock_time"`
+	Amount     uint64    `json:"amount"`
+}
+
+func (k Keeper) NewDayIdInfo(dayId int64, unlockTime time.Time, amount uint64) (res []DayIdInfo) {
+	info := DayIdInfo{
+		DayId:      dayId,
+		UnlockTime: unlockTime,
+		Amount:     amount,
+	}
+
+	return append(res, info)
+}
+
+func (k Keeper) GetReceiverDayIdsInfo(ctx sdk.Context, receiver string) (res []DayIdInfo) {
+	storeKey := types.ReceiverStoreKey(receiver)
+	store := ctx.KVStore(k.storeKey)
+	if b := store.Get(storeKey); b != nil {
+
+		if err := json.Unmarshal(b, &res); err != nil {
+			return
+		} else {
+			return
+		}
+
+	} else {
+		return
+	}
+}
+
+func (k Keeper) SetReceiverDayIdsInfo(ctx sdk.Context, receiver string, dayInfos []DayIdInfo) {
+	storeKey := types.ReceiverStoreKey(receiver)
+	store := ctx.KVStore(k.storeKey)
+
+	jsonBytes, _ := json.Marshal(dayInfos)
+	store.Set(storeKey, jsonBytes)
+}
+
+func (k Keeper) GetDayReceiverAmount(ctx sdk.Context, dayId int64, receiver string) int64 {
+	storeKey := types.DayReceiverAmountStoreKey(dayId, receiver)
 	store := ctx.KVStore(k.storeKey)
 	if b := store.Get(storeKey); b != nil {
 		return types.BytesToInt64(b)

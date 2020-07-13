@@ -7,7 +7,7 @@ require (
 	github.com/aristanetworks/goarista v0.0.0-20200331225509-2cc472e8fbd6 // indirect
 	github.com/btcsuite/btcd v0.20.1-beta // indirect
 	github.com/cespare/cp v1.1.1 // indirect
-	github.com/cosmos/cosmos-sdk v0.34.4-0.20200403200637-7f78e61b93a5
+	github.com/cosmos/cosmos-sdk v0.34.4-0.20200406170659-df5badaf4c2b
 	github.com/deckarep/golang-set v1.7.1 // indirect
 	github.com/elastic/gosigar v0.10.3 // indirect
 	github.com/ethereum/go-ethereum v1.9.13
@@ -28,8 +28,9 @@ require (
 	github.com/tendermint/go-amino v0.15.1
 	github.com/tendermint/tendermint v0.33.3
 	github.com/tendermint/tm-db v0.5.1
+	github.com/vbstreetz/coin-price-bet v0.0.0-20200616102435-cc252f9160c7 // indirect
 	golang.org/x/crypto v0.0.0-20200311171314-f7b00557c8c4
 	gopkg.in/yaml.v2 v2.2.8
 )
 
-replace github.com/cosmos/cosmos-sdk => github.com/landoyjx/cosmos-sdk v0.34.4-3
+replace github.com/cosmos/cosmos-sdk => github.com/landoyjx/cosmos-sdk v0.34.4-200

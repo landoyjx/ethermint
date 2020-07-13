@@ -28,13 +28,23 @@ var (
 	// GlobalStoreKeyPrefix is a prefix for versioning store
 	GlobalStoreKeyPrefix = []byte{0x00}
 
-	DayReceiverAmountStoreKeyPrefix = append(GlobalStoreKeyPrefix, []byte("BlcokCoinReceiverAmount")...)
+	ReceiverStoreKeyPrefix = append(GlobalStoreKeyPrefix, []byte("Receiver")...)
+
+	DayReceiverAmountStoreKeyPrefix = append(GlobalStoreKeyPrefix, []byte("DayCoinReceiverAmount")...)
 
 	DayReceiverPaidStoreKeyPrefix = append(GlobalStoreKeyPrefix, []byte("DayReceiverPaid")...)
 )
 
 func GetEscrowAddress() sdk.AccAddress {
-	return sdk.AccAddress(crypto.AddressHash([]byte("COLLATERAL")))
+	return sdk.AccAddress(crypto.AddressHash([]byte("Escrow")))
+}
+
+
+
+func ReceiverStoreKey(receiver string)[]byte{
+	ret := ReceiverStoreKeyPrefix
+	ret = append(ret, []byte(receiver)...)
+	return ret
 }
 
 // Generate key for each block+coin+receiver => total amount in store
