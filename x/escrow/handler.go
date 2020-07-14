@@ -27,6 +27,7 @@ func NewHandler(keeper Keeper) sdk.Handler {
 }
 
 func handleSendWithUnlock(ctx sdk.Context, msg MsgSendWithUnlock, keeper Keeper) (*sdk.Result, error) {
+
 	types.Logger.Info("MsgSendWithUnlock")
 
 	dayId := types.GetDayId(msg.UnlockTime.Unix())

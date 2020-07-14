@@ -53,58 +53,10 @@ func (msg MsgSendWithUnlock) GetSigners() []sdk.AccAddress {
 	return []sdk.AccAddress{msg.FromAddress}
 }
 
-// MsgPlaceBet is a message for placing a bet
-type MsgPlaceBet struct {
-	Bettor sdk.AccAddress `json:"bettor"`
-	Amount sdk.Coins      `json:"amount"`
-	CoinId uint8          `json:"coinId"`
-}
-
-// NewMsgPlaceBet creates a new MsgPlaceBet instance.
-func NewMsgPlaceBet(
-	bettor sdk.AccAddress,
-	amount sdk.Coins,
-	coinId uint8,
-) MsgPlaceBet {
-	return MsgPlaceBet{
-		Bettor: bettor,
-		Amount: amount,
-		CoinId: coinId,
-	}
-}
-
-// Route implements the sdk.Msg interface for MsgPlaceBet.
-func (msg MsgPlaceBet) Route() string { return RouterKey }
-
-// Type implements the sdk.Msg interface for MsgPlaceBet.
-func (msg MsgPlaceBet) Type() string { return "place_bet" }
-
-// ValidateBasic implements the sdk.Msg interface for MsgPlaceBet.
-func (msg MsgPlaceBet) ValidateBasic() error {
-	if msg.Bettor.Empty() {
-		return sdkerrors.Wrapf(ErrInvalidBasicMsg, "MsgPlaceBet: Bettor address must not be empty.")
-	}
-	if msg.Amount.Empty() {
-		return sdkerrors.Wrapf(ErrInvalidBasicMsg, "MsgPlaceBet: Amount must not be empty.")
-	}
-	return nil
-}
-
-// GetSigners implements the sdk.Msg interface for MsgPlaceBet.
-func (msg MsgPlaceBet) GetSigners() []sdk.AccAddress {
-	return []sdk.AccAddress{msg.Bettor}
-}
-
-// GetSignBytes implements the sdk.Msg interface for MsgPlaceBet.
-func (msg MsgPlaceBet) GetSignBytes() []byte {
-	bz := ModuleCdc.MustMarshalJSON(msg)
-	return sdk.MustSortJSON(bz)
-}
-
 // MsgPayout is a message for placing a bet
 type MsgPayout struct {
-	Receiver sdk.AccAddress `json:"receiver"`
-	DayId    int64          `json:"dayId"`
+	Receiver    sdk.AccAddress `json:"receiver"`
+	DayId       int64          `json:"dayId"`
 }
 
 // NewMsgPayout creates a new MsgPayout instance.
@@ -122,7 +74,7 @@ func NewMsgPayout(
 func (msg MsgPayout) Route() string { return RouterKey }
 
 // Type implements the sdk.Msg interface for MsgPayout.
-func (msg MsgPayout) Type() string { return "place_bet" }
+func (msg MsgPayout) Type() string { return ModuleName }
 
 // ValidateBasic implements the sdk.Msg interface for MsgPayout.
 func (msg MsgPayout) ValidateBasic() error {

@@ -77,12 +77,12 @@ func BytesToInt64(b []byte) int64 {
 // Get days since genesis
 func GetDayId(t int64) int64 {
 	return int64(time.Unix(t, 0).Sub(time.Unix(GetGenesisBlockTime(), 0)).Hours() / 24) // int64 rounds down
-	//return int64(time.Unix(blockTime, 0).Sub(time.Unix(GetGenesisBlockTime(), 0)).Minutes() / 10) // int64 rounds down
+	//return int64(time.Unix(t, 0).Sub(time.Unix(GetGenesisBlockTime(), 0)).Minutes() / 5) // int64 rounds down
 }
 
 func GetTimeByDayId(dayId int64) int64 {
 	return time.Unix(GetGenesisBlockTime(), 0).Add(time.Duration(dayId) * time.Duration(24) * time.Hour).Unix()
-	//return time.Unix(GetGenesisBlockTime(), 0).Add(time.Duration(dayId) * time.Duration(10) * time.Minute).Unix()
+	//return time.Unix(GetGenesisBlockTime(), 0).Add(time.Duration(dayId) * time.Duration(5) * time.Minute).Unix()
 }
 
 func GetGenesisBlockTime() int64 {

@@ -2,7 +2,7 @@ package cli
 
 import (
 	"bufio"
-	"fmt"
+
 	"strconv"
 	"time"
 
@@ -57,14 +57,6 @@ func SendTxCmd(cdc *codec.Codec) *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			tomorrow := time.Now().Add(10 * time.Minute)
-
-			fmt.Printf("unlock time: %v  tomorrow: %v \n", unlockTime, tomorrow.UTC())
-
-			// if unlockTime.Before(tomorrow) {
-			// 	return fmt.Errorf("unlock time: %v before tomorrow: %v ", unlockTime, tomorrow)
-			// }
 
 			// build and sign the transaction, then broadcast to Tendermint
 			msg := types.NewMsgSendWithUnlock(cliCtx.GetFromAddress(), to, coins, unlockTime)
