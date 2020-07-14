@@ -39,9 +39,7 @@ func GetEscrowAddress() sdk.AccAddress {
 	return sdk.AccAddress(crypto.AddressHash([]byte("Escrow")))
 }
 
-
-
-func ReceiverStoreKey(receiver string)[]byte{
+func ReceiverStoreKey(receiver string) []byte {
 	ret := ReceiverStoreKeyPrefix
 	ret = append(ret, []byte(receiver)...)
 	return ret
@@ -77,12 +75,18 @@ func BytesToInt64(b []byte) int64 {
 }
 
 // Get days since genesis
-func GetDayId(blockTime int64) int64 {
-	return int64(time.Unix(blockTime, 0).Sub(time.Unix(GetGenesisBlockTime(), 0)).Hours() / 24) // int64 rounds down
+func GetDayId(t int64) int64 {
+	return int64(time.Unix(t, 0).Sub(time.Unix(GetGenesisBlockTime(), 0)).Hours() / 24) // int64 rounds down
+	//return int64(time.Unix(blockTime, 0).Sub(time.Unix(GetGenesisBlockTime(), 0)).Minutes() / 10) // int64 rounds down
+}
+
+func GetTimeByDayId(dayId int64) int64 {
+	return time.Unix(GetGenesisBlockTime(), 0).Add(time.Duration(dayId) * time.Duration(24) * time.Hour).Unix()
+	//return time.Unix(GetGenesisBlockTime(), 0).Add(time.Duration(dayId) * time.Duration(10) * time.Minute).Unix()
 }
 
 func GetGenesisBlockTime() int64 {
-	return 1585699200 // Wednesday, 1 April 2020 00:00:00 GMT
+	return 1594051200 //   2020/7/7 00:00:00
 }
 
 func GetFirstDayId() int64 {

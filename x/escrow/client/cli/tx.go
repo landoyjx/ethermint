@@ -53,17 +53,18 @@ func SendTxCmd(cdc *codec.Codec) *cobra.Command {
 				return err
 			}
 
-			unlockTime, err := time.Parse("2006-01-02", args[3])
+			unlockTime, err := time.ParseInLocation("2006-01-02 15:04:05", args[3], time.UTC)
 			if err != nil {
 				return err
 			}
 
-			oneDay, _ := time.ParseDuration("24h")
-			tomorrow := time.Now().Add(oneDay)
+			tomorrow := time.Now().Add(10 * time.Minute)
 
-			if unlockTime.Before(tomorrow) {
-				return fmt.Errorf("unlock time: %v before tomorrow: %v ", unlockTime, tomorrow)
-			}
+			fmt.Printf("unlock time: %v  tomorrow: %v \n", unlockTime, tomorrow.UTC())
+
+			// if unlockTime.Before(tomorrow) {
+			// 	return fmt.Errorf("unlock time: %v before tomorrow: %v ", unlockTime, tomorrow)
+			// }
 
 			// build and sign the transaction, then broadcast to Tendermint
 			msg := types.NewMsgSendWithUnlock(cliCtx.GetFromAddress(), to, coins, unlockTime)

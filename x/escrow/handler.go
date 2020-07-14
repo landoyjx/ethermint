@@ -17,7 +17,7 @@ func NewHandler(keeper Keeper) sdk.Handler {
 		// types.Logger.Info(fmt.Sprintf("msg: %+v", msg))
 		switch msg := msg.(type) {
 		case MsgSendWithUnlock:
-			return handlePlaceBet(ctx, msg, keeper)
+			return handleSendWithUnlock(ctx, msg, keeper)
 		case MsgPayout:
 			return handlePayout(ctx, msg, keeper)
 		default:
@@ -26,18 +26,20 @@ func NewHandler(keeper Keeper) sdk.Handler {
 	}
 }
 
-func handlePlaceBet(ctx sdk.Context, msg MsgSendWithUnlock, keeper Keeper) (*sdk.Result, error) {
+func handleSendWithUnlock(ctx sdk.Context, msg MsgSendWithUnlock, keeper Keeper) (*sdk.Result, error) {
 	types.Logger.Info("MsgSendWithUnlock")
+
+	dayId := types.GetDayId(msg.UnlockTime.Unix())
 
 	if err := keeper.EscrowCoin(ctx, msg.FromAddress, msg.Amount); err != nil {
 		return nil, err
 	}
 
-	oneDay, _ := time.ParseDuration("24h")
-	tomorrow := ctx.BlockTime().Add(oneDay)
+	blockTimeDayId := types.GetDayId(ctx.BlockTime().Unix())
 
-	if msg.UnlockTime.Before(tomorrow) {
-		return nil, fmt.Errorf("unlock time: %v before tomorrow: %v ", msg.UnlockTime, tomorrow)
+	if dayId < blockTimeDayId+1 {
+		return nil, sdkerrors.Wrapf(types.Error, "unlock time: %v block time: %v escrow earliest time: %v,dayId: %v blockTimeDayId+1: %v",
+			msg.UnlockTime, ctx.BlockTime(), time.Unix(types.GetTimeByDayId(blockTimeDayId+1), 0).UTC(), dayId, blockTimeDayId+1)
 	}
 
 	amount := msg.Amount[0].Amount.Uint64()
@@ -45,17 +47,15 @@ func handlePlaceBet(ctx sdk.Context, msg MsgSendWithUnlock, keeper Keeper) (*sdk
 
 	types.Logger.Info(fmt.Sprintf("Updating mappings due to receiver(%s) amount(%d)", receiver, amount))
 
-	DayId := types.GetDayId(msg.UnlockTime.Unix())
-
-	totalAmount := keeper.GetDayReceiverAmount(ctx, DayId, receiver)
-	keeper.SetDayReceiverAmount(ctx, DayId, receiver, totalAmount+int64(amount))
+	totalAmount := keeper.GetDayReceiverAmount(ctx, dayId, receiver)
+	keeper.SetDayReceiverAmount(ctx, dayId, receiver, totalAmount+int64(amount))
 
 	if oldDaysInfo := keeper.GetReceiverDayIdsInfo(ctx, receiver); len(oldDaysInfo) == 0 {
-		keeper.SetReceiverDayIdsInfo(ctx, receiver, keeper.NewDayIdInfo(DayId, msg.UnlockTime, amount))
+		keeper.SetReceiverDayIdsInfo(ctx, receiver, keeper.NewDayIdInfo(dayId, msg.UnlockTime, amount))
 	} else {
 		exist := false
 		for k, v := range oldDaysInfo {
-			if v.DayId == DayId {
+			if v.DayId == dayId {
 				v.Amount = v.Amount + amount
 				oldDaysInfo[k] = v
 				keeper.SetReceiverDayIdsInfo(ctx, receiver, oldDaysInfo)
@@ -65,7 +65,7 @@ func handlePlaceBet(ctx sdk.Context, msg MsgSendWithUnlock, keeper Keeper) (*sdk
 		}
 
 		if !exist {
-			keeper.SetReceiverDayIdsInfo(ctx, receiver, append(oldDaysInfo, keeper.NewDayIdInfo(DayId, msg.UnlockTime, amount)...))
+			keeper.SetReceiverDayIdsInfo(ctx, receiver, append(oldDaysInfo, keeper.NewDayIdInfo(dayId, msg.UnlockTime, amount)...))
 		}
 	}
 
@@ -77,8 +77,9 @@ func handlePayout(ctx sdk.Context, msg MsgPayout, keeper Keeper) (*sdk.Result, e
 
 	blockDayId := types.GetDayId(ctx.BlockTime().Unix())
 
-	if blockDayId < msg.DayId {
-		return nil, sdkerrors.Wrapf(types.Error, "invalid day(%d), current blockDayId(%d)", msg.DayId, blockDayId)
+	if blockDayId <= msg.DayId {
+		return nil, sdkerrors.Wrapf(types.Error, "blockDayId < = msg.DayId,invalid dayId(%d) unlock time: %v, current blockDayId(%d) block time: %v",
+			msg.DayId, time.Unix(types.GetTimeByDayId(msg.DayId), 0).UTC(), blockDayId, ctx.BlockTime())
 	}
 	receiver := msg.Receiver.String()
 
