@@ -21,3 +21,5 @@ start.sh
 
 bin/
 testnet/
+
+init.wade.sh

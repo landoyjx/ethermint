@@ -1,7 +1,7 @@
 #!/bin/bash
 
 KEY="mykey"
-KEY2="wade"
+KEY1="wade"
 CHAINID=8
 MONIKER="mymoniker"
 
@@ -14,7 +14,7 @@ hallecli config keyring-backend test
 
 # if mykey exists it should be deleted
 hallecli keys add $KEY
-hallecli keys add $KEY2
+hallecli keys add $KEY1
 
 # Set moniker and chain-id for Ethermint (Moniker can be anything, chain-id must be an integer)
 halled init $MONIKER --chain-id $CHAINID
@@ -32,7 +32,7 @@ hallecli config trust-node true
 
 # Allocate genesis accounts (cosmos formatted addresses)
 halled add-genesis-account $(hallecli keys show $KEY -a) 1000000000000000000hale
-halled add-genesis-account $(hallecli keys show $KEY2 -a) 100000000000000hale    --vesting-amount 600hale  --vesting-start-time  1591781100   --vesting-end-time  1591781700
+halled add-genesis-account $(hallecli keys show $KEY1 -a) 10000000000000000000000000hale   # --vesting-amount 600hale  --vesting-start-time  1591781100   --vesting-end-time  1591781700
 
 # Sign genesis transaction
 halled gentx --name $KEY --keyring-backend test

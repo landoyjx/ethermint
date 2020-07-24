@@ -131,13 +131,13 @@ emintcli config keyring-backend file
 To export the private key from Ethermint to something like Metamask, run:
 
 ```bash
-emintcli keys unsafe-export-eth-key mykey
+hallecli keys unsafe-export-eth-key mykey
 ```
 
 Import account through private key, and to verify that the Ethereum address is correct with:
 
 ```bash
-emintcli keys parse $(emintcli keys show mykey -a)
+hallecli keys parse $(emintcli keys show mykey -a)
 ```
 
 ### Tests

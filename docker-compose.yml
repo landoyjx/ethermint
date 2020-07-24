@@ -9,7 +9,7 @@ services:
     - "8545:8545"
     volumes:
     - ./build:/home
-    command: /bin/bash -c 'cd /home/ && ./halled start --home node0 --log_level info --rpc.unsafe'
+    command: /bin/bash -c 'cd /home/ && ./halled start --home node0 --log_level info --rpc.unsafe --rpc.laddr "tcp://0.0.0.0:26657"'
     networks:
       localnet:
         ipv4_address: 192.168.20.2
