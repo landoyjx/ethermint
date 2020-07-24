@@ -465,6 +465,8 @@ github.com/landoyjx/cosmos-sdk v0.34.4-2 h1:a3BXTyGLsoCGYpA65K4d8F+qeLQQaezb1RYA
 github.com/landoyjx/cosmos-sdk v0.34.4-2/go.mod h1:J2RTB23kBgFKwtKd7J/gk4WwG363cA/xM0GU1Gfztw4=
 github.com/landoyjx/cosmos-sdk v0.34.4-3 h1:i6x4QwTNsYRJVcfY6SiVYFienu63uBpUGTQvNAzl81I=
 github.com/landoyjx/cosmos-sdk v0.34.4-3/go.mod h1:J2RTB23kBgFKwtKd7J/gk4WwG363cA/xM0GU1Gfztw4=
+github.com/landoyjx/cosmos-sdk v0.34.4-4 h1:qYRNmQhl5fGyuuhzXCbWh+lse8jCKSKlDr/7S8g3uK4=
+github.com/landoyjx/cosmos-sdk v0.34.4-4/go.mod h1:J2RTB23kBgFKwtKd7J/gk4WwG363cA/xM0GU1Gfztw4=
 github.com/landoyjx/cosmos-sdk v0.34.4-200 h1:wL1KRtkq4nnUxAbB8+uBc4KMBO+hzvxmAW78lhVH3Ds=
 github.com/landoyjx/cosmos-sdk v0.34.4-200/go.mod h1:J2RTB23kBgFKwtKd7J/gk4WwG363cA/xM0GU1Gfztw4=
 github.com/landoyjx/cosmos-sdk v0.34.4-302/go.mod h1:Ml/Xm/HkUnMirJ/x/HuVPQbC0bdc0v/Onveregoa5QM=
