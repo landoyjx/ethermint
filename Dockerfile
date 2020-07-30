@@ -8,6 +8,8 @@ ENV GOPROXY https://mirrors.aliyun.com/goproxy/
 ENV GOPATH /root/go
 ENV REPO_PATH $GOPATH/src/github.com/landoyjx/ethermint
 ENV GO111MODULE on
+ENV  GONOSUMDB="github.com/cosmos/cosmos-sdk"
+ENV  GOSUMDB="off"
 COPY . $REPO_PATH/
 WORKDIR $REPO_PATH
 
@@ -26,4 +28,4 @@ COPY --from=build-env $REPO_PATH/build/halled /usr/bin/halled
 COPY --from=build-env $REPO_PATH/build/hallecli /usr/bin/hallecli
 
 # Run halled by default
-CMD ["halled","start","--minimum-gas-prices","5.0hale","--pruning=nothing","--rpc.unsafe","--log_level","main:info,state:info,mempool:info"]
+CMD ["halled","start","--minimum-gas-prices","5.0hale","--pruning=nothing","--log_level","main:info,state:info,mempool:info"]
