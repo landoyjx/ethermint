@@ -196,9 +196,12 @@ testnet_init:
 	rm -rf build/clicfg
 	@cp -R testnet/* build/
 
-testnet_start:
-	docker-compose up -d
+testnet_start_20:
+	docker-compose up -d -f  docker-compose_20.yml
 
+testnet_start_4:
+	docker-compose up -d -f  docker-compose_4.yml
+	
 testnet_stop:
 	docker-compose down
 
