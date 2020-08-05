@@ -197,11 +197,11 @@ testnet_init:
 	@cp -R testnet/* build/
 
 testnet_start_20:
-	docker-compose up -d -f  docker-compose_20.yml
+	docker-compose  -f  docker-compose_20.yml up -d 
 
 testnet_start_4:
-	docker-compose up -d -f  docker-compose_4.yml
-	
+	docker-compose   -f  docker-compose_4.yml up -d
+
 testnet_stop:
 	docker-compose down
 
