@@ -31,8 +31,10 @@ hallecli config trust-node true
 # Set moniker and chain-id for Ethermint (Moniker can be anything, chain-id must be an integer)
 
 # Allocate genesis accounts (cosmos formatted addresses)
-halled add-genesis-account $(hallecli keys show $KEY -a)  100000000000000000000000000hale
-halled add-genesis-account $(hallecli keys show $KEY1 -a) 100000000000000000000000000hale   # --vesting-amount 600hale  --vesting-start-time  1591781100   --vesting-end-time  1591781700
+echo "add-genesis-account "
+echo $(hallecli keys show $KEY -a)
+halled add-genesis-account $(hallecli keys show $KEY -a)  100000000000000000000000000uhale
+halled add-genesis-account $(hallecli keys show $KEY1 -a) 100000000000000000000000000uhale   # --vesting-amount 600hale  --vesting-start-time  1591781100   --vesting-end-time  1591781700
 
 # Sign genesis transaction
 halled gentx --name $KEY --keyring-backend test

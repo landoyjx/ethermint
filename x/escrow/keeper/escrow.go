@@ -16,7 +16,7 @@ func (k Keeper) EscrowCoin(ctx sdk.Context, buyer sdk.AccAddress, amount sdk.Coi
 	if len(amount) != 1 {
 		return sdkerrors.Wrapf(types.ErrOnlyOneDenomAllowed, "%d denoms included", len(amount))
 	}
-	prefix := "hale"
+	prefix := "uhale"
 	if !strings.HasPrefix(amount[0].Denom, prefix) {
 		return sdkerrors.Wrapf(types.ErrInvalidDenom, "denom was: %s", amount[0].Denom)
 	}

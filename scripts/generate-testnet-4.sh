@@ -23,17 +23,17 @@ hallecli keys add mykey3
 
 
 # 4. add genesis accounts to genesis.json
-halled add-genesis-account $(hallecli keys show mykey0 -a) 1000000000000000000hale --home testnet/node0
-halled add-genesis-account $(hallecli keys show mykey1 -a) 1000000000000000000hale --home testnet/node0
-halled add-genesis-account $(hallecli keys show mykey2 -a) 1000000000000000000hale --home testnet/node0
-halled add-genesis-account $(hallecli keys show mykey3 -a) 1000000000000000000hale --home testnet/node0
+halled add-genesis-account $(hallecli keys show mykey0 -a) 10000000000000000000000000000uhale --home testnet/node0
+halled add-genesis-account $(hallecli keys show mykey1 -a) 10000000000000000000000000000uhale --home testnet/node0
+halled add-genesis-account $(hallecli keys show mykey2 -a) 10000000000000000000000000000uhale --home testnet/node0
+halled add-genesis-account $(hallecli keys show mykey3 -a) 10000000000000000000000000000uhale --home testnet/node0
 
 
 # halled add-genesis-account $(hallecli keys show mykey1 -a) 1000000000000000000hale --home testnet/node1
 # halled add-genesis-account $(hallecli keys show mykey2 -a) 1000000000000000000hale --home testnet/node2
-halled add-genesis-account $(hallecli keys show mykey1 -a) 1000000000000000000hale --home testnet/node1
-halled add-genesis-account $(hallecli keys show mykey2 -a) 1000000000000000000hale --home testnet/node2
-halled add-genesis-account $(hallecli keys show mykey3 -a) 1000000000000000000hale --home testnet/node3
+halled add-genesis-account $(hallecli keys show mykey1 -a) 10000000000000000000000000000uhale --home testnet/node1
+halled add-genesis-account $(hallecli keys show mykey2 -a) 10000000000000000000000000000uhale --home testnet/node2
+halled add-genesis-account $(hallecli keys show mykey3 -a) 10000000000000000000000000000uhale --home testnet/node3
 
 
 

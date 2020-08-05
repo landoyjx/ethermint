@@ -92,7 +92,7 @@ func handlePayout(ctx sdk.Context, msg MsgPayout, keeper Keeper) (*sdk.Result, e
 		return nil, sdkerrors.Wrapf(types.Error, "receiver(%s) has no coin in the day(%d)", receiver, msg.DayId)
 	}
 	keeper.SetDayReceiverPaid(ctx, msg.DayId, receiver, true)
-	keeper.Payout(ctx, msg.Receiver, sdk.NewCoins(sdk.NewInt64Coin("hale", amount)))
+	keeper.Payout(ctx, msg.Receiver, sdk.NewCoins(sdk.NewInt64Coin("uhale", amount)))
 
 	daysInfo := keeper.GetReceiverDayIdsInfo(ctx, msg.Receiver.String())
 	for k, v := range daysInfo {

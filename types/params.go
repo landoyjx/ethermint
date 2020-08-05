@@ -8,5 +8,5 @@ const (
 
 	// DenomDefault defines the single coin type/denomination supported in
 	// Ethermint.
-	DenomDefault = "hale"
+	DenomDefault = "uhale"
 )
