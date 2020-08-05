@@ -31,8 +31,8 @@ hallecli config trust-node true
 # Set moniker and chain-id for Ethermint (Moniker can be anything, chain-id must be an integer)
 
 # Allocate genesis accounts (cosmos formatted addresses)
-halled add-genesis-account $(hallecli keys show $KEY -a) 1000000000000000000hale
-halled add-genesis-account $(hallecli keys show $KEY1 -a) 10000000000000000000000000hale   # --vesting-amount 600hale  --vesting-start-time  1591781100   --vesting-end-time  1591781700
+halled add-genesis-account $(hallecli keys show $KEY -a)  100000000000000000000000000hale
+halled add-genesis-account $(hallecli keys show $KEY1 -a) 100000000000000000000000000hale   # --vesting-amount 600hale  --vesting-start-time  1591781100   --vesting-end-time  1591781700
 
 # Sign genesis transaction
 halled gentx --name $KEY --keyring-backend test
@@ -48,4 +48,4 @@ echo -e '\n\nRun this rest-server command in a different terminal/window:'
 echo -e "hallecli rest-server --laddr \"tcp://localhost:8545\" --unlock-key $KEY --chain-id $CHAINID\n\n"
 
 # Start the node (remove the --pruning=nothing flag if historical queries are not needed)
-halled start  --minimum-gas-prices  1.0hale  --pruning=nothing --rpc.unsafe --log_level "main:info,state:info,mempool:info"
+halled start  --minimum-gas-prices  5.0hale  --pruning=nothing --rpc.unsafe --log_level "main:info,state:info,mempool:info"
