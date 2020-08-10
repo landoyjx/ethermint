@@ -248,4 +248,4 @@ networks:
       driver: default
       config:
       -
-        subnet: 192.168.20.0/16
+        subnet: 192.168.20.0/24

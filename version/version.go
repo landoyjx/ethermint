@@ -6,7 +6,8 @@ import (
 )
 
 var (
-	VERSION     string
+	VERSION string
+	//ChainId     string
 	BUILD_TIME  string
 	GO_VERSION  string
 	GIT_BRANCH  string

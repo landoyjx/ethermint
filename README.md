@@ -137,7 +137,7 @@ hallecli keys unsafe-export-eth-key mykey
 Import account through private key, and to verify that the Ethereum address is correct with:
 
 ```bash
-hallecli keys parse $(emintcli keys show mykey -a)
+hallecli keys parse $(emintcli keys show mykey3 -a)
 ```
 
 ### Tests

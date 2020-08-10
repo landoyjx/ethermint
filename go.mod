@@ -3,6 +3,9 @@ module github.com/cosmos/ethermint
 go 1.14
 
 require (
+	4d63.com/gochecknoglobals v0.0.0-20190306162314-7c3491d2b6ec // indirect
+	4d63.com/gochecknoinits v0.0.0-20200108094044-eb73b47b9fc4 // indirect
+	github.com/alecthomas/gocyclo v0.0.0-20150208221726-aa8f8b160214 // indirect
 	github.com/alexkohler/nakedret v1.0.0 // indirect
 	github.com/allegro/bigcache v1.2.1 // indirect
 	github.com/aristanetworks/goarista v0.0.0-20200331225509-2cc472e8fbd6 // indirect
@@ -15,11 +18,11 @@ require (
 	github.com/fjl/memsize v0.0.0-20190710130421-bcb5799ab5e5 // indirect
 	github.com/gogo/protobuf v1.3.1
 	github.com/golangci/golangci-lint v1.23.8 // indirect
-	github.com/gordonklaus/ineffassign v0.0.0-20200309095847-7953dde2c7bf // indirect
 	github.com/gorilla/mux v1.7.4
 	github.com/huin/goupnp v1.0.0 // indirect
 	github.com/jgautheron/goconst v0.0.0-20200227150835-cda7ea3bf591 // indirect
 	github.com/mdempsky/maligned v0.0.0-20180708014732-6e39bd26a8c8 // indirect
+	github.com/mibk/dupl v1.0.0 // indirect
 	github.com/opennota/check v0.0.0-20180911053232-0c771f5545ff // indirect
 	github.com/pkg/errors v0.9.1
 	github.com/prometheus/tsdb v0.9.1 // indirect
@@ -36,8 +39,9 @@ require (
 	github.com/tendermint/tm-db v0.5.1
 	github.com/tsenart/deadcode v0.0.0-20160724212837-210d2dc333e9 // indirect
 	github.com/vbstreetz/coin-price-bet v0.0.0-20200616102435-cc252f9160c7 // indirect
+	github.com/walle/lll v1.0.1 // indirect
 	golang.org/x/crypto v0.0.0-20200311171314-f7b00557c8c4
 	gopkg.in/yaml.v2 v2.2.8
 )
 
-replace github.com/cosmos/cosmos-sdk => github.com/landoyjx/cosmos-sdk v0.34.4-700
+replace github.com/cosmos/cosmos-sdk => github.com/landoyjx/cosmos-sdk v0.34.4-708

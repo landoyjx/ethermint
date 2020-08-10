@@ -66,7 +66,7 @@ func main() {
 		PersistentPreRunE: server.PersistentPreRunEFn(ctx),
 	}
 	// CLI commands to initialize the chain
-  rootCmd.AddCommand(versionCmd)
+	rootCmd.AddCommand(versionCmd)
 	rootCmd.AddCommand(
 		withChainIDValidation(genutilcli.InitCmd(ctx, cdc, app.ModuleBasics, app.DefaultNodeHome)),
 		genutilcli.CollectGenTxsCmd(ctx, cdc, bank.GenesisBalancesIterator{}, app.DefaultNodeHome),
@@ -95,8 +95,14 @@ func main() {
 }
 
 func newApp(logger log.Logger, db dbm.DB, traceStore io.Writer) abci.Application {
+
+	skipUpgradeHeights := make(map[int64]bool)
+	for _, h := range viper.GetIntSlice(server.FlagUnsafeSkipUpgrades) {
+		skipUpgradeHeights[int64(h)] = true
+	}
+
 	return app.NewEthermintApp(
-		logger, db, traceStore, true, 0,
+		logger, db, traceStore, true, skipUpgradeHeights, viper.GetString(flags.FlagHome), 0,
 		baseapp.SetPruning(store.NewPruningOptionsFromString(viper.GetString("pruning"))),
 		baseapp.SetMinGasPrices(viper.GetString(server.FlagMinGasPrices)),
 		baseapp.SetHaltHeight(uint64(viper.GetInt(server.FlagHaltHeight))),
@@ -108,7 +114,7 @@ func exportAppStateAndTMValidators(
 ) (json.RawMessage, []tmtypes.GenesisValidator, error) {
 
 	if height != -1 {
-		emintApp := app.NewEthermintApp(logger, db, traceStore, true, 0)
+		emintApp := app.NewEthermintApp(logger, db, traceStore, true, map[int64]bool{}, "", 0)
 		err := emintApp.LoadHeight(height)
 		if err != nil {
 			return nil, nil, err
@@ -116,7 +122,7 @@ func exportAppStateAndTMValidators(
 		return emintApp.ExportAppStateAndValidators(forZeroHeight, jailWhiteList)
 	}
 
-	emintApp := app.NewEthermintApp(logger, db, traceStore, true, 0)
+	emintApp := app.NewEthermintApp(logger, db, traceStore, true, map[int64]bool{}, "", 0)
 
 	return emintApp.ExportAppStateAndValidators(forZeroHeight, jailWhiteList)
 }

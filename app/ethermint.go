@@ -26,10 +26,13 @@ import (
 	"github.com/cosmos/cosmos-sdk/x/supply"
 	ethermintcodec "github.com/cosmos/ethermint/codec"
 
+	"github.com/cosmos/cosmos-sdk/x/upgrade"
+  upgradeclient "github.com/cosmos/cosmos-sdk/x/upgrade/client"
+
 	"github.com/cosmos/ethermint/app/ante"
 	eminttypes "github.com/cosmos/ethermint/types"
-	"github.com/cosmos/ethermint/x/evm"
 	"github.com/cosmos/ethermint/x/escrow"
+	"github.com/cosmos/ethermint/x/evm"
 
 	abci "github.com/tendermint/tendermint/abci/types"
 	"github.com/tendermint/tendermint/libs/log"
@@ -58,7 +61,7 @@ var (
 		mint.AppModuleBasic{},
 		distr.AppModuleBasic{},
 		gov.NewAppModuleBasic(
-			paramsclient.ProposalHandler, distr.ProposalHandler,
+			paramsclient.ProposalHandler, distr.ProposalHandler, upgradeclient.ProposalHandler,
 		),
 		params.AppModuleBasic{},
 		crisis.AppModuleBasic{},
@@ -66,6 +69,7 @@ var (
 		evidence.AppModuleBasic{},
 		evm.AppModuleBasic{},
 		escrow.AppModuleBasic{},
+		upgrade.AppModuleBasic{},
 	)
 
 	// module account permissions
@@ -116,6 +120,7 @@ type EthermintApp struct {
 	EvidenceKeeper evidence.Keeper
 	EvmKeeper      evm.Keeper
 	EscrowKeeper   escrow.Keeper
+	upgradeKeeper  upgrade.Keeper
 
 	// the module manager
 	mm *module.Manager
@@ -131,8 +136,8 @@ type EthermintApp struct {
 // in a sovereign zone and as an application running with a shared security model.
 // For now, it will support only running as a sovereign application.
 func NewEthermintApp(
-	logger log.Logger, db dbm.DB, traceStore io.Writer, loadLatest bool,
-	invCheckPeriod uint, baseAppOptions ...func(*bam.BaseApp),
+	logger log.Logger, db dbm.DB, traceStore io.Writer, loadLatest bool, skipUpgradeHeights map[int64]bool,
+	homePath string, invCheckPeriod uint, baseAppOptions ...func(*bam.BaseApp),
 ) *EthermintApp {
 
 	cdc := ethermintcodec.MakeCodec(ModuleBasics)
@@ -146,7 +151,7 @@ func NewEthermintApp(
 	keys := sdk.NewKVStoreKeys(
 		bam.MainStoreKey, auth.StoreKey, bank.StoreKey, staking.StoreKey,
 		supply.StoreKey, mint.StoreKey, distr.StoreKey, slashing.StoreKey,
-		gov.StoreKey, params.StoreKey, evidence.StoreKey, evm.CodeKey, evm.StoreKey,escrow.StoreKey,
+		gov.StoreKey, params.StoreKey, evidence.StoreKey, evm.CodeKey, evm.StoreKey, escrow.StoreKey, upgrade.StoreKey,
 	)
 	blockKey := sdk.NewKVStoreKey(evm.BlockKey)
 
@@ -206,8 +211,15 @@ func NewEthermintApp(
 	)
 
 	app.EscrowKeeper = escrow.NewKeeper(
-		app.cdc,app.BankKeeper, keys[escrow.StoreKey],
+		app.cdc, app.BankKeeper, keys[escrow.StoreKey],
 	)
+
+	app.upgradeKeeper = upgrade.NewKeeper(skipUpgradeHeights, keys[upgrade.StoreKey], appCodec, homePath)
+
+	// app.upgradeKeeper.SetUpgradeHandler("test", func(ctx sdk.Context, plan upgrade.Plan) {
+	// 		ctx.Logger().Info("upgrade ","handler_key","test","plan_name",plan.Name)
+	// })
+
 
 	// create evidence keeper with router
 	evidenceKeeper := evidence.NewKeeper(
@@ -222,7 +234,8 @@ func NewEthermintApp(
 	govRouter := gov.NewRouter()
 	govRouter.AddRoute(gov.RouterKey, gov.ProposalHandler).
 		AddRoute(paramproposal.RouterKey, params.NewParamChangeProposalHandler(app.ParamsKeeper)).
-		AddRoute(distr.RouterKey, distr.NewCommunityPoolSpendProposalHandler(app.DistrKeeper))
+		AddRoute(distr.RouterKey, distr.NewCommunityPoolSpendProposalHandler(app.DistrKeeper)).
+		AddRoute(upgrade.RouterKey, upgrade.NewSoftwareUpgradeProposalHandler(app.upgradeKeeper))
 	app.GovKeeper = gov.NewKeeper(
 		appCodec, keys[gov.StoreKey], app.subspaces[gov.ModuleName], app.SupplyKeeper,
 		&stakingKeeper, govRouter,
@@ -250,17 +263,20 @@ func NewEthermintApp(
 		evidence.NewAppModule(app.EvidenceKeeper),
 		evm.NewAppModule(app.EvmKeeper),
 		escrow.NewAppModule(app.EscrowKeeper),
+		upgrade.NewAppModule(app.upgradeKeeper),
 	)
 
 	// During begin block slashing happens after distr.BeginBlocker so that
 	// there is nothing left over in the validator fee pool, so as to keep the
 	// CanWithdrawInvariant invariant.
 	app.mm.SetOrderBeginBlockers(
-		evm.ModuleName, mint.ModuleName, distr.ModuleName, slashing.ModuleName,
+		upgrade.ModuleName, evm.ModuleName, mint.ModuleName, distr.ModuleName, slashing.ModuleName,
 		evidence.ModuleName,
 	)
+
+
 	app.mm.SetOrderEndBlockers(
-	  escrow.ModuleName,	evm.ModuleName, crisis.ModuleName, gov.ModuleName, staking.ModuleName,
+		escrow.ModuleName, evm.ModuleName, crisis.ModuleName, gov.ModuleName, staking.ModuleName,
 	)
 
 	// NOTE: The genutils module must occur after staking so that pools are

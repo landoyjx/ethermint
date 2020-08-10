@@ -15,7 +15,7 @@
 PACKAGES=$(shell go list ./... | grep -Ev 'vendor|importer|rpc/tester')
 COMMIT_HASH := $(shell git rev-parse --short HEAD)
 COMMIT_SHA1=`git rev-parse HEAD`
-BUILD_FLAGS = -tags netgo -ldflags "-X github.com/cosmos/ethermint/version.GitCommit=${COMMIT_HASH}  -X  github.com/cosmos/ethermint/version.VERSION=0.1.2 -X github.com/cosmos/ethermint/version.COMMIT_SHA1=${COMMIT_SHA1}   -X 'github.com/cosmos/ethermint/version.BUILD_TIME=`date`'  -X  'github.com/cosmos/ethermint/version.GO_VERSION=`go version`' -X 'github.com/cosmos/ethermint/version.GIT_BRANCH=`git symbolic-ref --short -q HEAD`' "
+BUILD_FLAGS = -tags netgo -ldflags "-X github.com/cosmos/ethermint/version.GitCommit=${COMMIT_HASH}  -X  github.com/cosmos/ethermint/version.VERSION=0.1.3 -X github.com/cosmos/ethermint/version.COMMIT_SHA1=${COMMIT_SHA1}   -X 'github.com/cosmos/ethermint/version.BUILD_TIME=`date`'  -X  'github.com/cosmos/ethermint/version.GO_VERSION=`go version`' -X 'github.com/cosmos/ethermint/version.GIT_BRANCH=`git symbolic-ref --short -q HEAD`' "
 DOCKER_TAG = unstable
 DOCKER_IMAGE = cosmos/ethermint
 ETHERMINT_DAEMON_BINARY = halled
@@ -197,10 +197,10 @@ testnet_init:
 	@cp -R testnet/* build/
 
 testnet_start_20:
-	docker-compose  -f  docker-compose_20.yml up -d
+	docker-compose  -f  docker-compose_20.yml up -d  --remove-orphans
 
 testnet_start_4:
-	docker-compose   -f  docker-compose_4.yml up -d
+	docker-compose   -f  docker-compose_4.yml up -d --remove-orphans
 
 testnet_stop_4:
 	docker-compose  -f  docker-compose_4.yml   down
@@ -208,9 +208,22 @@ testnet_stop_4:
 testnet_stop_20:
 	docker-compose   -f  docker-compose_20.yml down
 
+testnet_stop:
+	docker-compose  -f  docker-compose_4.yml   down
 
 testnet_clean:
-	docker-compose down
+	docker-compose  -f  docker-compose_4.yml  down
+	docker-compose  -f  docker-compose_20.yml  down
+	rm -rf build/node*
+	rm -rf build/clicfg
+
+testnet_clean_4:
+	docker-compose  -f  docker-compose_4.yml  down
+	rm -rf build/node*
+	rm -rf build/clicfg
+
+testnet_clean_20:
+	docker-compose  -f  docker-compose_20.yml  down
 	rm -rf build/node*
 	rm -rf build/clicfg
 
