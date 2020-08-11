@@ -52,6 +52,15 @@ cp testnet/node3/config/gentx/* testnet/node0/config/gentx/
 
 halled collect-gentxs --home testnet/node0
 
+os=`uname -a`
+mac='Darwin'
+if [[ $os =~ $mac ]];then
+  sed -i ''  's/"max_gas": "-1"/"max_gas": "5000000"/g'  testnet/node0/config/genesis.json
+else
+  sed -i 's/"max_gas": "-1"/"max_gas": "5000000"/g'  testnet/node0/config/genesis.json
+fi
+
+
 
 # 7. collect node1 and node2 genesis.json gentxs, copy to node0 genesis.json gentxs, copy node0 genesis.json to replace others
 rm -f testnet/node1/config/genesis.json
@@ -65,8 +74,8 @@ cp testnet/node0/config/genesis.json testnet/node3/config/
 
 
 # 8. config each node's config.toml persistent_peers to the other two node's node-id@node-ip:26656
-os=`uname -a`
-mac='Darwin'
+# os=`uname -a`
+# mac='Darwin'
 peers=`halled tendermint show-node-id --home testnet/node0`@192.168.20.2:26656,`halled tendermint show-node-id --home testnet/node1`@192.168.20.3:26656,`halled tendermint show-node-id --home testnet/node2`@192.168.20.4:26656
 if [[ $os =~ $mac ]];then
     gsed -i '175,175d' testnet/node0/config/config.toml
