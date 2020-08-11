@@ -28,4 +28,4 @@ COPY --from=build-env $REPO_PATH/build/halled /usr/bin/halled
 COPY --from=build-env $REPO_PATH/build/hallecli /usr/bin/hallecli
 
 # Run halled by default
-CMD ["halled","start","--minimum-gas-prices","5.0hale","--pruning=nothing","--log_level","main:info,state:info,mempool:info"]
+CMD ["halled","start","--minimum-gas-prices","5.0uhale","--pruning=nothing","--log_level","main:info,state:info,mempool:info"]

@@ -173,3 +173,15 @@ The following chat channels and forums are a great spot to ask questions about E
 
 - [Cosmos Discord](https://discord.gg/W8trcGV)
 - Cosmos Forum [![Discourse status](https://img.shields.io/discourse/https/forum.cosmos.network/status.svg)](https://forum.cosmos.network)
+
+
+
+
+
+### wade note
+
+1. run  rest-server with enable cores
+```bash
+./hallecli rest-server --laddr  "tcp://0.0.0.0:8545" --unlock-key mykey0 --chain-id  8 --trace --home clicfg/  --unsafe-cors=true
+
+```
