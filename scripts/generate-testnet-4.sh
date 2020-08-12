@@ -1,7 +1,10 @@
 # 1. hallecli init
 rm -rf ~/.halle*
+
+ReplaceChainId="halle-test-1"
+
 hallecli config keyring-backend test
-hallecli config chain-id 8
+hallecli config chain-id $ReplaceChainId
 hallecli config output json
 hallecli config indent true
 hallecli config trust-node true
@@ -12,6 +15,32 @@ halled init node0 --chain-id 8 --home testnet/node0
 halled init node1 --chain-id 8 --home testnet/node1
 halled init node2 --chain-id 8 --home testnet/node2
 halled init node3 --chain-id 8 --home testnet/node3
+
+os=`uname -a`
+mac='Darwin'
+if [[ $os =~ $mac ]];then
+
+  sed -i ''  's/"chain_id": "8"/"chain_id":"'$ReplaceChainId'"/g'   testnet/node0/config/genesis.json
+  sed -i ''  's/"chain_id": "8"/"chain_id":"'$ReplaceChainId'"/g'   testnet/node1/config/genesis.json
+  sed -i ''  's/"chain_id": "8"/"chain_id":"'$ReplaceChainId'"/g'   testnet/node2/config/genesis.json
+  sed -i ''  's/"chain_id": "8"/"chain_id":"'$ReplaceChainId'"/g'   testnet/node3/config/genesis.json
+
+  sed -i ''  's/"max_gas": "-1"/"max_gas": "500000"/g'   testnet/node0/config/genesis.json
+  sed -i ''  's/"max_gas": "-1"/"max_gas": "500000"/g'   testnet/node1/config/genesis.json
+  sed -i ''  's/"max_gas": "-1"/"max_gas": "500000"/g'   testnet/node2/config/genesis.json
+  sed -i ''  's/"max_gas": "-1"/"max_gas": "500000"/g'   testnet/node3/config/genesis.json
+else
+  sed -i   's/"chain_id": "8"/"chain_id":"'$ReplaceChainId'"/g'   testnet/node0/config/genesis.json
+  sed -i   's/"chain_id": "8"/"chain_id":"'$ReplaceChainId'"/g'   testnet/node1/config/genesis.json
+  sed -i   's/"chain_id": "8"/"chain_id":"'$ReplaceChainId'"/g'   testnet/node2/config/genesis.json
+  sed -i   's/"chain_id": "8"/"chain_id":"'$ReplaceChainId'"/g'   testnet/node3/config/genesis.json
+
+  sed -i   's/"max_gas": "-1"/"max_gas": "500000"/g'   testnet/node0/config/genesis.json
+  sed -i   's/"max_gas": "-1"/"max_gas": "500000"/g'   testnet/node1/config/genesis.json
+  sed -i   's/"max_gas": "-1"/"max_gas": "500000"/g'   testnet/node2/config/genesis.json
+  sed -i   's/"max_gas": "-1"/"max_gas": "500000"/g'   testnet/node3/config/genesis.json
+fi
+
 
 
 
