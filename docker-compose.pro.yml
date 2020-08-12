@@ -19,6 +19,7 @@ services:
     volumes:
     - /root/.halled:/root/.halled
     - /root/.hallecli:/root/.hallecli
+    command: halled start  --minimum-gas-prices  5.0uhale  --pruning=nothing  --log_level "main:info,state:info,mempool:info"   --rpc.laddr "tcp://0.0.0.0:26657"
     deploy:
       replicas: 1
       restart_policy:
