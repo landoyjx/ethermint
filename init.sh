@@ -3,7 +3,6 @@
 KEY="mykey"
 KEY1="wade"
 CHAINID=8
-ReplaceChainId="halle-test-1"
 MONIKER="mymoniker"
 
 # remove existing chain environment, data and
@@ -25,15 +24,13 @@ os=`uname -a`
 mac='Darwin'
 if [[ $os =~ $mac ]];then
 
-  sed -i ''  's/"chain_id": "8"/"chain_id":"'$ReplaceChainId'"/g'   ~/.halled/config/genesis.json
   sed -i ''  's/"max_gas": "-1"/"max_gas": "500000"/g'   ~/.halled/config/genesis.json
 else
-  sed -i 's/"chain_id": "8"/"chain_id":"'$ReplaceChainId'"/g'   ~/.halled/config/genesis.json
   sed -i 's/"max_gas": "-1"/"max_gas": "500000"/g'   ~/.halled/config/genesis.json
 fi
 
 # Set up config for CLI
-hallecli config chain-id $ReplaceChainId
+hallecli config chain-id $CHAINID
 hallecli config output json
 hallecli config indent true
 hallecli config trust-node true
@@ -63,7 +60,7 @@ halled validate-genesis
 
 # Command to run the rest server in a different terminal/window
 echo -e '\n\nRun this rest-server command in a different terminal/window:'
-echo -e "hallecli rest-server --laddr \"tcp://localhost:8545\" --unlock-key $KEY --chain-id $ReplaceChainId\n\n"
+echo -e "hallecli rest-server --laddr \"tcp://localhost:8545\" --unlock-key $KEY --chain-id $CHAINID\n\n"
 
 # Start the node (remove the --pruning=nothing flag if historical queries are not needed)
 halled start  --minimum-gas-prices  5.0uhale  --pruning=nothing --rpc.unsafe --log_level "main:info,state:info,mempool:info"   --rpc.laddr "tcp://0.0.0.0:26657"
