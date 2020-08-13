@@ -1,23 +1,22 @@
 
 
-./halled init node0   --chain-id   8
-./halled init node1   --chain-id   8
-./halled init node2   --chain-id   8
-./halled init node3   --chain-id   8
-./halled init node4   --chain-id   8
-./halled init node5   --chain-id   8
-./halled init node6   --chain-id   8
+./halled init node0   --chain-id   0812
+./halled init node1   --chain-id   0812
+./halled init node2   --chain-id   0812
+./halled init node3   --chain-id   0812
+./halled init node4   --chain-id   0812
+./halled init node5   --chain-id   0812
+./halled init node6   --chain-id   0812
 
 
 
-  sed -i 's/"chain_id": "8"/"chain_id":"halle-1"/g'   ~/.halled/config/genesis.json
   sed -i 's/"max_gas": "-1"/"max_gas": "1000000000"/g'   ~/.halled/config/genesis.json
 
 
 
-  ./hallecli config chain-id "halle-1"
+  ./hallecli config chain-id  0812
   ./hallecli config output json
-
+  ./hallecli config indent true
 
 
 node0
@@ -123,5 +122,19 @@ docker ui: 9000
 
 start or update Command
 ```bash
-docker stack deploy -c docker-compose.pro.yml  halle-1  
+docker stack deploy -c docker-compose.pro.yml  0812  
 ```
+
+
+
+mv .halled  .halled.chainIdStr.ethTx.failed
+mv .hallecli .hallecli.chainIdStr.ethTx.failed
+
+cp -r .hallecli.orgin   .hallecli
+cp -r .halled.origin    .halled
+
+
+  sed -i 's/"chain_id": "8"/"chain_id":"halle-1"/g'   ~/.halled/config/genesis.json
+
+
+sed -i 's/"chain_id": "halle-1"/"chain_id": "0812"/g'   ~/.halled/config/genesis.json

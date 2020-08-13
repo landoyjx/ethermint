@@ -3,31 +3,31 @@ rm -rf ~/.halle*
 
 
 hallecli config keyring-backend test
-hallecli config chain-id 8
+hallecli config chain-id 200812
 hallecli config output json
 hallecli config indent true
 hallecli config trust-node true
 
 # 2. init
 rm -rf testnet/*
-halled init node0 --chain-id 8 --home testnet/node0
-halled init node1 --chain-id 8 --home testnet/node1
-halled init node2 --chain-id 8 --home testnet/node2
-halled init node3 --chain-id 8 --home testnet/node3
+halled init node0 --chain-id 200812 --home testnet/node0
+halled init node1 --chain-id 200812 --home testnet/node1
+halled init node2 --chain-id 200812 --home testnet/node2
+halled init node3 --chain-id 200812 --home testnet/node3
 
 os=`uname -a`
 mac='Darwin'
 if [[ $os =~ $mac ]];then
 
-  sed -i ''  's/"max_gas": "-1"/"max_gas": "500000"/g'   testnet/node0/config/genesis.json
-  sed -i ''  's/"max_gas": "-1"/"max_gas": "500000"/g'   testnet/node1/config/genesis.json
-  sed -i ''  's/"max_gas": "-1"/"max_gas": "500000"/g'   testnet/node2/config/genesis.json
-  sed -i ''  's/"max_gas": "-1"/"max_gas": "500000"/g'   testnet/node3/config/genesis.json
+  sed -i ''  's/"max_gas": "-1"/"max_gas": "1000000000"/g'   testnet/node0/config/genesis.json
+  sed -i ''  's/"max_gas": "-1"/"max_gas": "1000000000"/g'   testnet/node1/config/genesis.json
+  sed -i ''  's/"max_gas": "-1"/"max_gas": "1000000000"/g'   testnet/node2/config/genesis.json
+  sed -i ''  's/"max_gas": "-1"/"max_gas": "1000000000"/g'   testnet/node3/config/genesis.json
 else
-  sed -i   's/"max_gas": "-1"/"max_gas": "500000"/g'   testnet/node0/config/genesis.json
-  sed -i   's/"max_gas": "-1"/"max_gas": "500000"/g'   testnet/node1/config/genesis.json
-  sed -i   's/"max_gas": "-1"/"max_gas": "500000"/g'   testnet/node2/config/genesis.json
-  sed -i   's/"max_gas": "-1"/"max_gas": "500000"/g'   testnet/node3/config/genesis.json
+  sed -i   's/"max_gas": "-1"/"max_gas": "1000000000"/g'   testnet/node0/config/genesis.json
+  sed -i   's/"max_gas": "-1"/"max_gas": "1000000000"/g'   testnet/node1/config/genesis.json
+  sed -i   's/"max_gas": "-1"/"max_gas": "1000000000"/g'   testnet/node2/config/genesis.json
+  sed -i   's/"max_gas": "-1"/"max_gas": "1000000000"/g'   testnet/node3/config/genesis.json
 fi
 
 
@@ -73,9 +73,9 @@ halled collect-gentxs --home testnet/node0
 os=`uname -a`
 mac='Darwin'
 if [[ $os =~ $mac ]];then
-  sed -i ''  's/"max_gas": "-1"/"max_gas": "5000000"/g'  testnet/node0/config/genesis.json
+  sed -i ''  's/"max_gas": "-1"/"max_gas": "1000000000"/g'  testnet/node0/config/genesis.json
 else
-  sed -i 's/"max_gas": "-1"/"max_gas": "5000000"/g'  testnet/node0/config/genesis.json
+  sed -i 's/"max_gas": "-1"/"max_gas": "1000000000"/g'  testnet/node0/config/genesis.json
 fi
 
 

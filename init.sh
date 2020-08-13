@@ -2,7 +2,7 @@
 
 KEY="mykey"
 KEY1="wade"
-CHAINID=8
+CHAINID=200812
 MONIKER="mymoniker"
 
 # remove existing chain environment, data and
@@ -24,9 +24,9 @@ os=`uname -a`
 mac='Darwin'
 if [[ $os =~ $mac ]];then
 
-  sed -i ''  's/"max_gas": "-1"/"max_gas": "500000"/g'   ~/.halled/config/genesis.json
+  sed -i ''  's/"max_gas": "-1"/"max_gas": "1000000000"/g'   ~/.halled/config/genesis.json
 else
-  sed -i 's/"max_gas": "-1"/"max_gas": "500000"/g'   ~/.halled/config/genesis.json
+  sed -i 's/"max_gas": "-1"/"max_gas": "1000000000"/g'   ~/.halled/config/genesis.json
 fi
 
 # Set up config for CLI
