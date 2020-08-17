@@ -33,7 +33,7 @@ The following config steps can be performed all at once by executing the `init.s
 ```bash
 ./init.sh
 ```
-> This bash file removes previous blockchain data from `~/.emintd` and `~/.emintcli`. It uses the `keyring-backend` called `test` that should prevent you from needing to enter a passkey. The `keyring-backend` `test` is unsecured and should not be used in production.
+> This bash file removes previous blockchain data from `~/.halled` and `~/.hallecli`. It uses the `keyring-backend` called `test` that should prevent you from needing to enter a passkey. The `keyring-backend` `test` is unsecured and should not be used in production.
 
 
 
@@ -55,10 +55,10 @@ or point any dev tooling at `http://localhost:8545` or whatever port is chosen j
 
 #### Clearing data from chain
 
-Data for the CLI and Daemon should be stored at `~/.emintd` and `~/.emintcli` by default, to start the node with a fresh state, run:
+Data for the CLI and Daemon should be stored at `~/.halled` and `~/.hallecli` by default, to start the node with a fresh state, run:
 
 ```bash
-rm -rf ~/.emint*
+rm -rf ~/.halle*
 ```
 
 To clear all data except key storage (if keyring backend chosen) and then you can rerun the commands to start the node again.
@@ -68,7 +68,7 @@ To clear all data except key storage (if keyring backend chosen) and then you ca
 The instructions above include commands to use `test` as the `keyring-backend`. This is an unsecured keyring that doesn't require entering a password and should not be used in production. Otherwise, Halle supports using a file or OS keyring backend for key storage. To create and use a file stored key instead of defaulting to the OS keyring, add the flag `--keyring-backend file` to any relevant command and the password prompt will occur through the command line. This can also be saved as a CLI config option with:
 
 ```bash
-emintcli config keyring-backend file
+hallecli config keyring-backend file
 ```
 
 ### Exporting Halle private key from Halle Chain
